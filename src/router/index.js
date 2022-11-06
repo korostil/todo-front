@@ -7,7 +7,8 @@ const router = createRouter({
       path: "/",
       name: "main",
       components: {
-        tasks: () => import("../views/MainView.vue"),
+        projects: () => import("../views/ProjectsView.vue"),
+        tasks: () => import("../views/TasksView.vue"),
       },
     },
   ],
