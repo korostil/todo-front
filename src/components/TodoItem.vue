@@ -7,7 +7,7 @@ defineProps({
 <template>
   <div class="task">
     <div class="title">{{ task.title }}</div>
-    <div class="subtitle">{{ task.subtitle }}</div>
+    <div class="description">{{ task.description }}</div>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ defineProps({
   font-weight: bold;
   font-size: 1.5em;
 }
-.subtitle {
+.description {
   font-size: 1em;
 }
 </style>
