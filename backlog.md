@@ -1,0 +1,9 @@
+- [ ] implement "Add task" button
+- [ ] implement "Add project" button
+- [ ] add task view
+  - [ ] update task
+  - [ ] delete task
+- [ ] add actions button to tasks
+  - [ ] delete task
+- [ ] handle errors (network, bad request etc.) and show
+- [ ] refactor README.md
