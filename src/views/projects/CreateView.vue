@@ -24,7 +24,7 @@ function createProject() {
     headers: { "content-type": "application/json", Authorization: token },
   })
     .then((res) => {
-      if (!res.ok) {
+      if (res.status !== 201) {
         const error = new Error(res.statusText);
         error.json = res.json();
         throw error;
@@ -33,8 +33,7 @@ function createProject() {
       return res.json();
     })
     .then((json) => {
-      console.log(json);
-      router.push({ name: "project", project_id: json.data.id });
+      router.push({ name: "project", params: { project_id: json.data.id } });
     })
     .catch(() => {
       console.log("error");

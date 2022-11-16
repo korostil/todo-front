@@ -2,10 +2,10 @@
 - [x] tasks list view
 - [x] projects list view
 - [ ] project view
-	- [ ] create project
+	- [x] delete project
 	- [x] read project
+	- [x] create project
 	- [ ] update project
-	- [ ] delete project
 - [ ] task view
 	- [ ] create task
 	- [ ] read task
@@ -24,3 +24,5 @@
     - [ ] show: title, description, color, goal (only id for now), space, created date
 - [ ] handle errors (network, bad request etc.) and show
 - [ ] refactor README.md
+- [ ] add delete confirmation modal view
+- [ ] navigation panel
