@@ -5,20 +5,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="project">
-    <div class="title">{{ project.title }}</div>
+  <div>
+    <router-link :to="{ name: 'project', params: { project_id: project.id } }">
+      {{ project.title }}
+    </router-link>
   </div>
 </template>
 
-<style scoped>
-.project {
-  display: block;
-  padding: 8px 16px;
-  max-width: 128px;
-  min-width: 128px;
-}
-.project:hover {
-  background-color: #eee;
-  cursor: pointer;
-}
-</style>
+<style scoped></style>

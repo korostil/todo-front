@@ -4,4 +4,7 @@ import ProjectList from "@/components/ProjectList.vue";
 
 <template>
   <project-list />
+  <div>
+    <button>+ project</button>
+  </div>
 </template>

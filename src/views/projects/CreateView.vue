@@ -1,19 +1,26 @@
 <script setup>
-import TodoItem from "@/components/TodoItem.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 // TODO move variables to one shared place
 const todo_api_url = import.meta.env.VITE_TODO_API_URL;
 const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+const router = useRouter();
 
-const tasks = ref(null);
+let url = todo_api_url + "/api/private/v1/projects/",
+  token = "Bearer " + todo_api_token;
+
 const loading = ref(true);
+const title = ref(null);
 
-function fetchTasks() {
-  let url = todo_api_url + "/api/private/v1/tasks/",
-    token = "Bearer " + todo_api_token;
+function createProject() {
   return fetch(url, {
-    method: "get",
+    method: "post",
+    body: JSON.stringify({
+      title: title.value,
+      description: "foo description",
+      space: 1,
+    }),
     headers: { "content-type": "application/json", Authorization: token },
   })
     .then((res) => {
@@ -26,7 +33,8 @@ function fetchTasks() {
       return res.json();
     })
     .then((json) => {
-      tasks.value = json.data;
+      console.log(json);
+      router.push({ name: "project", project_id: json.data.id });
     })
     .catch(() => {
       console.log("error");
@@ -35,16 +43,11 @@ function fetchTasks() {
       loading.value = false;
     });
 }
-
-onMounted(() => {
-  fetchTasks();
-});
 </script>
 
 <template>
-  <div v-if="!loading && tasks && tasks.length">
-    <todo-item v-for="task in tasks" :task="task" :key="task.id" />
-  </div>
+  <input v-model="title" placeholder="Title" />
+  <button @click="createProject">Save</button>
 </template>
 
 <style scoped></style>

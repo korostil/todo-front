@@ -1,16 +1,16 @@
 <script setup>
-import ProjectItem from "@/components/ProjectItem.vue";
+import TaskItem from "@/components/TaskItem.vue";
 import { ref, onMounted } from "vue";
 
 // TODO move variables to one shared place
 const todo_api_url = import.meta.env.VITE_TODO_API_URL;
 const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
 
-const projects = ref(null);
+const tasks = ref(null);
 const loading = ref(true);
 
-function fetchProjects() {
-  let url = todo_api_url + "/api/private/v1/projects/",
+function fetchTasks() {
+  let url = todo_api_url + "/api/private/v1/tasks/",
     token = "Bearer " + todo_api_token;
   return fetch(url, {
     method: "get",
@@ -26,7 +26,7 @@ function fetchProjects() {
       return res.json();
     })
     .then((json) => {
-      projects.value = json.data;
+      tasks.value = json.data;
     })
     .catch(() => {
       console.log("error");
@@ -37,17 +37,13 @@ function fetchProjects() {
 }
 
 onMounted(() => {
-  fetchProjects();
+  fetchTasks();
 });
 </script>
 
 <template>
-  <div v-if="!loading && projects && projects.length">
-    <project-item
-      v-for="project in projects"
-      :project="project"
-      :key="project.id"
-    />
+  <div v-if="!loading && tasks && tasks.length">
+    <task-item v-for="task in tasks" :task="task" :key="task.id" />
   </div>
 </template>
 
