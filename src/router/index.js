@@ -11,12 +11,22 @@ const router = createRouter({
     {
       path: "/projects/new/",
       name: "new_project",
-      component: () => import("../views/projects/CreateView.vue"),
+      component: () => import("../views/projects/CreateProjectView.vue"),
     },
     {
       path: "/projects/:project_id/",
       name: "project",
       component: () => import("../views/projects/ProjectView.vue"),
+    },
+    {
+      path: "/tasks/new/",
+      name: "new_task",
+      component: () => import("../views/tasks/CreateTaskView.vue"),
+    },
+    {
+      path: "/tasks/:task_id/",
+      name: "task",
+      component: () => import("../views/tasks/TaskView.vue"),
     },
   ],
 });

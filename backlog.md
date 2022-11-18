@@ -7,10 +7,10 @@
 	- [x] create project
 	- [ ] update project
 - [ ] task view
-	- [ ] create task
-	- [ ] read task
+	- [x] create task
+	- [x] read task
+	- [x] delete task
 	- [ ] update task
-	- [ ] delete task
 - [ ] add some css
 - [ ] scroll tasks and projects separately
 
