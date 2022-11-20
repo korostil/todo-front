@@ -6,11 +6,11 @@
 	- [x] read project
 	- [x] create project
 	- [x] update project
-- [ ] task view
+- [x] task view
 	- [x] create task
 	- [x] read task
 	- [x] delete task
-	- [ ] update task
+	- [x] update task
 - [ ] add some css
 - [ ] scroll tasks and projects separately
 

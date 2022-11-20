@@ -33,6 +33,11 @@ const router = createRouter({
       name: "task",
       component: () => import("../views/tasks/TaskView.vue"),
     },
+    {
+      path: "/tasks/:task_id/update/",
+      name: "update_task",
+      component: () => import("../views/tasks/CreateTaskView.vue"),
+    },
   ],
 });
 

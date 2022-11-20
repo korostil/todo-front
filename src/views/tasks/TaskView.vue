@@ -71,7 +71,16 @@ onMounted(() => {
   <div v-if="!loading && task">
     <h1>{{ task.title }}</h1>
 
-    <button>Update</button>
+    <button
+      @click="
+        router.push({
+          name: 'update_task',
+          params: { task_id: task.id },
+        })
+      "
+    >
+      Update
+    </button>
     <button @click="deleteTask">Delete</button>
   </div>
 </template>
