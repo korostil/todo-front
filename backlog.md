@@ -1,11 +1,11 @@
 # v1
 - [x] tasks list view
 - [x] projects list view
-- [ ] project view
+- [x] project view
 	- [x] delete project
 	- [x] read project
 	- [x] create project
-	- [ ] update project
+	- [x] update project
 - [ ] task view
 	- [x] create task
 	- [x] read task

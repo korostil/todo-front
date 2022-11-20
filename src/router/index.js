@@ -19,6 +19,11 @@ const router = createRouter({
       component: () => import("../views/projects/ProjectView.vue"),
     },
     {
+      path: "/projects/:project_id/update/",
+      name: "update_project",
+      component: () => import("../views/projects/CreateProjectView.vue"),
+    },
+    {
       path: "/tasks/new/",
       name: "new_task",
       component: () => import("../views/tasks/CreateTaskView.vue"),

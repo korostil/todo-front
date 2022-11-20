@@ -1,20 +1,32 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 // TODO move variables to one shared place
 const todo_api_url = import.meta.env.VITE_TODO_API_URL;
 const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+
+const route = useRoute();
 const router = useRouter();
 
-let url = todo_api_url + "/api/private/v1/projects/",
-  token = "Bearer " + todo_api_token;
-
+const project_id = route.params.project_id;
 const loading = ref(true);
 const title = ref(null);
+let action_url = null;
+let project = ref(null);
+let token = "Bearer " + todo_api_token;
+
+if (project_id) {
+  action_url = todo_api_url + "/api/private/v1/projects/" + project_id + "/";
+  fetchProject().then(() => {
+    title.value = project.value.title;
+  });
+} else {
+  action_url = todo_api_url + "/api/private/v1/projects/";
+}
 
 function createProject() {
-  return fetch(url, {
+  return fetch(action_url, {
     method: "post",
     body: JSON.stringify({
       title: title.value,
@@ -42,11 +54,69 @@ function createProject() {
       loading.value = false;
     });
 }
+
+function updateProject() {
+  return fetch(action_url, {
+    method: "put",
+    body: JSON.stringify({
+      title: title.value,
+    }),
+    headers: { "content-type": "application/json", Authorization: token },
+  })
+    .then((res) => {
+      if (res.status !== 200) {
+        const error = new Error(res.statusText);
+        error.json = res.json();
+        throw error;
+      }
+
+      return res.json();
+    })
+    .then((json) => {
+      router.push({ name: "project", params: { project_id: json.data.id } });
+    })
+    .catch(() => {
+      console.log("error");
+    })
+    .then(() => {
+      loading.value = false;
+    });
+}
+
+function fetchProject() {
+  return fetch(action_url, {
+    method: "get",
+    headers: { "content-type": "application/json", Authorization: token },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        const error = new Error(res.statusText);
+        error.json = res.json();
+        throw error;
+      }
+
+      return res.json();
+    })
+    .then((json) => {
+      project.value = json.data;
+    })
+    .catch(() => {
+      console.log("error");
+    })
+    .then(() => {
+      loading.value = false;
+    });
+}
 </script>
 
 <template>
   <input v-model="title" placeholder="Title" />
-  <button @click="createProject">Save</button>
+  <div v-if="project_id">
+    <button @click="updateProject">Update</button>
+  </div>
+  <div v-else>
+    <button @click="createProject">Save</button>
+  </div>
 </template>
 
 <style scoped></style>
