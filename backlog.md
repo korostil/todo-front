@@ -1,5 +1,5 @@
 ## v2
-- [ ] complete task
+- [x] complete task
 - [ ] take all requests to backend and put into one place
 - [ ] extend task fields
 - [ ] extend project fields
@@ -12,7 +12,7 @@
 	- [ ] show: title, description, color, goal (only id for now), space, created date
 - [ ] handle errors (network, bad request etc.) and show
 - [ ] refactor README.md
-- [ ] add delete confirmation modal view
+- [ ] add delete confirmation modal view (or timeout to cancel)
 - [ ] scroll tasks and projects separately
 
 # Done

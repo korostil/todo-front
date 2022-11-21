@@ -12,6 +12,8 @@ const router = useRouter();
 const task_id = route.params.task_id;
 let fetch_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
   delete_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
+  complete_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/complete/",
+  reopen_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/reopen/",
   token = "Bearer " + todo_api_token;
 
 const task = ref(null);
@@ -62,6 +64,46 @@ function deleteTask() {
     });
 }
 
+function completeTask() {
+  fetch(complete_url, {
+    method: "post",
+    headers: { "content-type": "application/json", Authorization: token },
+  })
+    .then((res) => {
+      if (res.status !== 200) {
+        const error = new Error(res.statusText);
+        error.json = res.json();
+        throw error;
+      }
+    })
+    .then(() => {
+      router.push({ name: "main" });
+    })
+    .catch(() => {
+      console.log("error");
+    });
+}
+
+function reopenTask() {
+  fetch(reopen_url, {
+    method: "post",
+    headers: { "content-type": "application/json", Authorization: token },
+  })
+    .then((res) => {
+      if (res.status !== 200) {
+        const error = new Error(res.statusText);
+        error.json = res.json();
+        throw error;
+      }
+    })
+    .then(() => {
+      router.push({ name: "main" });
+    })
+    .catch(() => {
+      console.log("error");
+    });
+}
+
 onMounted(() => {
   fetchTask();
 });
@@ -71,6 +113,12 @@ onMounted(() => {
   <div v-if="!loading && task">
     <h1>{{ task.title }}</h1>
 
+    <div v-if="task.is_completed">
+      <button class="btn green" @click="reopenTask">Reopen</button>
+    </div>
+    <div v-else>
+      <button class="btn green" @click="completeTask">Complete</button>
+    </div>
     <div>
       <button
         class="btn orange"
