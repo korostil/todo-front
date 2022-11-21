@@ -12,7 +12,8 @@ const router = useRouter();
 const task_id = route.params.task_id;
 let fetch_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
   delete_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
-  complete_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/complete/",
+  complete_url =
+    todo_api_url + "/api/private/v1/tasks/" + task_id + "/complete/",
   reopen_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/reopen/",
   token = "Bearer " + todo_api_token;
 
@@ -110,30 +111,37 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="!loading && task">
-    <h1>{{ task.title }}</h1>
-
-    <div v-if="task.is_completed">
-      <button class="btn green" @click="reopenTask">Reopen</button>
-    </div>
-    <div v-else>
-      <button class="btn green" @click="completeTask">Complete</button>
-    </div>
+  <div>
     <div>
-      <button
-        class="btn orange"
-        @click="
-          router.push({
-            name: 'update_task',
-            params: { task_id: task.id },
-          })
-        "
-      >
-        Update
+      <button class="btn purple" @click="router.push({ name: 'main' })">
+        Back to mainpage
       </button>
     </div>
-    <div>
-      <button class="btn red" @click="deleteTask">Delete</button>
+    <div v-if="!loading && task">
+      <h1>{{ task.title }}</h1>
+
+      <div v-if="task.is_completed">
+        <button class="btn green" @click="reopenTask">Reopen</button>
+      </div>
+      <div v-else>
+        <button class="btn green" @click="completeTask">Complete</button>
+      </div>
+      <div>
+        <button
+          class="btn orange"
+          @click="
+            router.push({
+              name: 'update_task',
+              params: { task_id: task.id },
+            })
+          "
+        >
+          Update
+        </button>
+      </div>
+      <div>
+        <button class="btn red" @click="deleteTask">Delete</button>
+      </div>
     </div>
   </div>
 </template>

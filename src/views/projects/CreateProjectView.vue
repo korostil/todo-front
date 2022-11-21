@@ -111,6 +111,11 @@ function fetchProject() {
 
 <template>
   <div>
+    <div>
+      <button class="btn purple" @click="router.push({ name: 'main' })">
+        Back to mainpage
+      </button>
+    </div>
     <h1 v-if="project_id">Update project</h1>
     <h1 v-else>New project</h1>
 

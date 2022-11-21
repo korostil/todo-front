@@ -3,7 +3,7 @@
 - [ ] take all requests to backend and put into one place
 - [ ] extend task fields
 - [ ] extend project fields
-- [ ] navigate to main page
+- [x] navigate to main page
 
 # Backlog
 - [ ] show which project the task belongs to
