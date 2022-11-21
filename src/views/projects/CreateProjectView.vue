@@ -110,12 +110,20 @@ function fetchProject() {
 </script>
 
 <template>
-  <input v-model="title" placeholder="Title" />
-  <div v-if="project_id">
-    <button @click="updateProject">Update</button>
-  </div>
-  <div v-else>
-    <button @click="createProject">Save</button>
+  <div>
+    <h1 v-if="project_id">Update project</h1>
+    <h1 v-else>New project</h1>
+
+    <div>
+      <input v-model="title" placeholder="Title" type="text" />
+    </div>
+
+    <div v-if="project_id">
+      <button class="btn orange" @click="updateProject">Update</button>
+    </div>
+    <div v-else>
+      <button class="btn green" @click="createProject">Save</button>
+    </div>
   </div>
 </template>
 

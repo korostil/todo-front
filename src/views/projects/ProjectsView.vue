@@ -8,6 +8,10 @@ const router = useRouter();
 <template>
   <project-list />
   <div>
-    <button @click="router.push({ name: 'new_project' })">+ project</button>
+    <button class="btn orange" @click="router.push({ name: 'new_project' })">
+      + project
+    </button>
   </div>
 </template>
+
+<style scoped></style>

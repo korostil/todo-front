@@ -110,12 +110,20 @@ function fetchTask() {
 </script>
 
 <template>
-  <input v-model="title" placeholder="Title" />
-  <div v-if="task_id">
-    <button @click="updateTask">Update</button>
-  </div>
-  <div v-else>
-    <button @click="createTask">Save</button>
+  <div>
+    <h1 v-if="task_id">Update task</h1>
+    <h1 v-else>New task</h1>
+
+    <div>
+      <input v-model="title" placeholder="Title" type="text" />
+    </div>
+
+    <div v-if="task_id">
+      <button class="btn orange" @click="updateTask">Update</button>
+    </div>
+    <div v-else>
+      <button class="btn green" @click="createTask">Save</button>
+    </div>
   </div>
 </template>
 

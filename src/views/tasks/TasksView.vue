@@ -8,6 +8,10 @@ const router = useRouter();
 <template>
   <todo-list />
   <div>
-    <button @click="router.push({ name: 'new_task' })">+ task</button>
+    <button class="btn green" @click="router.push({ name: 'new_task' })">
+      + task
+    </button>
   </div>
 </template>
+
+<style scoped></style>

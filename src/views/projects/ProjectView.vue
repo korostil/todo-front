@@ -70,18 +70,22 @@ onMounted(() => {
 <template>
   <div v-if="!loading && project">
     <h1>{{ project.title }}</h1>
-
-    <button
-      @click="
-        router.push({
-          name: 'update_project',
-          params: { project_id: project.id },
-        })
-      "
-    >
-      Update
-    </button>
-    <button @click="deleteProject">Delete</button>
+    <div>
+      <button
+        class="btn orange"
+        @click="
+          router.push({
+            name: 'update_project',
+            params: { project_id: project.id },
+          })
+        "
+      >
+        Update
+      </button>
+    </div>
+    <div>
+      <button class="btn red" @click="deleteProject">Delete</button>
+    </div>
   </div>
 </template>
 

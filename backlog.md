@@ -11,7 +11,7 @@
 	- [x] read task
 	- [x] delete task
 	- [x] update task
-- [ ] add some css
+- [x] add some css
 - [ ] scroll tasks and projects separately
 
 # Backlog
