@@ -11,16 +11,19 @@ const router = useRouter();
 
 const project_id = route.params.project_id;
 const loading = ref(true);
-const title = ref(null);
 let action_url = null;
-let project = ref(null);
+let project = ref({
+  title: null,
+  description: null,
+  color: null,
+  goal_id: null,
+  space: null,
+});
 let token = "Bearer " + todo_api_token;
 
 if (project_id) {
   action_url = todo_api_url + "/api/private/v1/projects/" + project_id + "/";
-  fetchProject().then(() => {
-    title.value = project.value.title;
-  });
+  fetchProject();
 } else {
   action_url = todo_api_url + "/api/private/v1/projects/";
 }
@@ -28,11 +31,7 @@ if (project_id) {
 function createProject() {
   return fetch(action_url, {
     method: "post",
-    body: JSON.stringify({
-      title: title.value,
-      description: "foo description",
-      space: 1,
-    }),
+    body: JSON.stringify(project.value),
     headers: { "content-type": "application/json", Authorization: token },
   })
     .then((res) => {
@@ -58,9 +57,7 @@ function createProject() {
 function updateProject() {
   return fetch(action_url, {
     method: "put",
-    body: JSON.stringify({
-      title: title.value,
-    }),
+    body: JSON.stringify(project.value),
     headers: { "content-type": "application/json", Authorization: token },
   })
     .then((res) => {
@@ -120,7 +117,27 @@ function fetchProject() {
     <h1 v-else>New project</h1>
 
     <div>
-      <input v-model="title" placeholder="Title" type="text" />
+      <input v-model="project.title" placeholder="Title" type="text" />
+    </div>
+    <div>
+      <input
+        v-model="project.description"
+        placeholder="Description"
+        type="text"
+      />
+    </div>
+    <div>
+      <input v-model="project.color" placeholder="Color" type="color" />
+    </div>
+    <div>
+      <input v-model="project.goal_id" placeholder="Goal" type="text" />
+    </div>
+    <div>
+      <input type="radio" value="1" v-model="project.space" />
+      <label for="one">Personal space</label>
+
+      <input type="radio" value="2" v-model="project.space" />
+      <label for="two">Work space</label>
     </div>
 
     <div v-if="project_id">

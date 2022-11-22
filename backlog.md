@@ -2,7 +2,7 @@
 - [x] complete task
 - [x] navigate to main page
 - [x] extend task fields
-- [ ] extend project fields
+- [x] extend project fields
 - [ ] take all requests to backend and put into one place
 
 # Backlog
@@ -15,6 +15,7 @@
 - [ ] add delete confirmation modal view (or timeout to cancel)
 - [ ] scroll tasks and projects separately
 - [ ] add project picker to task views
+- [ ] add goal picker to project views
 
 # Done
 

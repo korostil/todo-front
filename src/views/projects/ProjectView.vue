@@ -77,6 +77,19 @@ onMounted(() => {
     <div v-if="!loading && project">
       <h1>{{ project.title }}</h1>
       <div>
+        <strong>{{ project.description }}</strong>
+      </div>
+      <div>
+        <strong>Color: {{ project.color }}</strong>
+      </div>
+      <div>
+        <strong>Goal: {{ project.goal_id }}</strong>
+      </div>
+      <div>
+        <strong>Space: {{ project.space }}</strong>
+      </div>
+
+      <div>
         <button
           class="btn orange"
           @click="
