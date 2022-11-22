@@ -11,16 +11,19 @@ const router = useRouter();
 
 const task_id = route.params.task_id;
 const loading = ref(true);
-const title = ref(null);
 let action_url = null;
-let task = ref(null);
+let task = ref({
+  title: null,
+  description: null,
+  space: null,
+  due: null,
+  project_id: null,
+});
 let token = "Bearer " + todo_api_token;
 
 if (task_id) {
   action_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/";
-  fetchTask().then(() => {
-    title.value = task.value.title;
-  });
+  fetchTask();
 } else {
   action_url = todo_api_url + "/api/private/v1/tasks/";
 }
@@ -28,11 +31,7 @@ if (task_id) {
 function createTask() {
   return fetch(action_url, {
     method: "post",
-    body: JSON.stringify({
-      title: title.value,
-      description: "foo description",
-      space: 1,
-    }),
+    body: JSON.stringify(task.value),
     headers: { "content-type": "application/json", Authorization: token },
   })
     .then((res) => {
@@ -58,9 +57,7 @@ function createTask() {
 function updateTask() {
   return fetch(action_url, {
     method: "put",
-    body: JSON.stringify({
-      title: title.value,
-    }),
+    body: JSON.stringify(task.value),
     headers: { "content-type": "application/json", Authorization: token },
   })
     .then((res) => {
@@ -120,7 +117,27 @@ function fetchTask() {
     <h1 v-else>New task</h1>
 
     <div>
-      <input v-model="title" placeholder="Title" type="text" />
+      <input v-model="task.title" placeholder="Title" type="text" />
+    </div>
+    <div>
+      <input v-model="task.description" placeholder="Description" type="text" />
+    </div>
+    <div>
+      <input v-model="task.decisive" placeholder="Decisive" type="checkbox" />
+      <label>Decisive</label>
+    </div>
+    <div>
+      <input type="radio" value="1" v-model="task.space" />
+      <label for="one">Personal space</label>
+
+      <input type="radio" value="2" v-model="task.space" />
+      <label for="two">Work space</label>
+    </div>
+    <div>
+      <input v-model="task.due" placeholder="Due" type="datetime-local" />
+    </div>
+    <div>
+      <input v-model="task.project_id" placeholder="Project" type="text" />
     </div>
 
     <div v-if="task_id">

@@ -119,6 +119,21 @@ onMounted(() => {
     </div>
     <div v-if="!loading && task">
       <h1>{{ task.title }}</h1>
+      <div>
+        <strong>{{ task.description }}</strong>
+      </div>
+      <div>
+        <strong>Decisive: {{ task.decisive }}</strong>
+      </div>
+      <div>
+        <strong>Space: {{ task.space }}</strong>
+      </div>
+      <div>
+        <strong>Due: {{ task.due }}</strong>
+      </div>
+      <div>
+        <strong>Project: {{ task.project_id }}</strong>
+      </div>
 
       <div v-if="task.is_completed">
         <button class="btn green" @click="reopenTask">Reopen</button>

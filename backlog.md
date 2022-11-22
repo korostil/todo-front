@@ -1,9 +1,9 @@
 ## v2
 - [x] complete task
-- [ ] take all requests to backend and put into one place
-- [ ] extend task fields
-- [ ] extend project fields
 - [x] navigate to main page
+- [x] extend task fields
+- [ ] extend project fields
+- [ ] take all requests to backend and put into one place
 
 # Backlog
 - [ ] show which project the task belongs to
@@ -14,6 +14,7 @@
 - [ ] refactor README.md
 - [ ] add delete confirmation modal view (or timeout to cancel)
 - [ ] scroll tasks and projects separately
+- [ ] add project picker to task views
 
 # Done
 
