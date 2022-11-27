@@ -1,12 +1,13 @@
-## v2
-- [x] complete task
-- [x] navigate to main page
-- [x] extend task fields
-- [x] extend project fields
-- [ ] take all requests to backend and put into one place
+## v1
+- [x] show project color
+- [ ] hide completed tasks
+- [ ] show which project the task belongs to
+- [ ] add project picker to task views
+- [ ] add view with all completed tasks
+- [ ] show task as a decisive task
 
 # Backlog
-- [ ] show which project the task belongs to
+- [ ] add goal picker to project views
 - [ ] implement "actions" button in projects list view
 	- [ ] add "info" option
 	- [ ] show: title, description, color, goal (only id for now), space, created date
@@ -14,8 +15,9 @@
 - [ ] refactor README.md
 - [ ] add delete confirmation modal view (or timeout to cancel)
 - [ ] scroll tasks and projects separately
-- [ ] add project picker to task views
-- [ ] add goal picker to project views
+- [ ] take all requests to backend and put into one place
+- [ ] remind to complete project if all tasks are completed
+- [ ] show goal color
 
 # Done
 
@@ -33,3 +35,7 @@
 	- [x] delete task
 	- [x] update task
 - [x] add some css
+- [x] complete task
+- [x] navigate to main page
+- [x] extend task fields
+- [x] extend project fields

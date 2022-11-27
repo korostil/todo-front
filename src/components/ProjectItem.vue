@@ -1,7 +1,10 @@
 <script setup>
-defineProps({
+import { ref } from "vue";
+
+const props = defineProps({
   project: Object,
 });
+const color = ref(props.project.color);
 </script>
 
 <template>
@@ -10,7 +13,8 @@ defineProps({
       class="project"
       :to="{ name: 'project', params: { project_id: project.id } }"
     >
-      {{ project.title }}
+      <div class="project-color" :style="{ backgroundColor: color }"></div>
+      <div class="project-title">{{ project.title }}</div>
     </router-link>
   </div>
 </template>
@@ -27,5 +31,15 @@ defineProps({
 }
 .project:hover {
   background-color: #363636;
+}
+.project-color {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.project-title {
+  display: inline-block;
 }
 </style>
