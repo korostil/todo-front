@@ -2,7 +2,7 @@
 - [x] show project color
 - [x] show task as a decisive task
 - [x] add project picker to task view
-- [ ] show which project the task belongs to
+- [x] show which project the task belongs to
 - [ ] add view with all completed tasks (blocked: add filter on the backend)
 - [ ] hide completed tasks (blocked: add filter on the backend)
 
@@ -19,6 +19,7 @@
 - [ ] remind to complete project if all tasks are completed
 - [ ] show goal color
 - [ ] add task sorting
+- [ ] save projects data to local storage
 
 # Done
 

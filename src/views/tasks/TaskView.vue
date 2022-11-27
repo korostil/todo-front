@@ -18,7 +18,9 @@ let fetch_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
   token = "Bearer " + todo_api_token;
 
 const task = ref(null);
+const project = ref(null);
 const loading = ref(true);
+const loading_project = ref(true);
 
 function fetchTask() {
   return fetch(fetch_url, {
@@ -36,6 +38,17 @@ function fetchTask() {
     })
     .then((json) => {
       task.value = json.data;
+      if (json.data.project_id !== null) {
+        fetchProject(
+          todo_api_url +
+            "/api/private/v1/projects/" +
+            json.data.project_id +
+            "/"
+        );
+      } else {
+        loading_project.value = false;
+        project.value = { title: "With no project" };
+      }
     })
     .catch(() => {
       console.log("error");
@@ -104,6 +117,30 @@ function reopenTask() {
       console.log("error");
     });
 }
+function fetchProject(url) {
+  return fetch(url, {
+    method: "get",
+    headers: { "content-type": "application/json", Authorization: token },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        const error = new Error(res.statusText);
+        error.json = res.json();
+        throw error;
+      }
+
+      return res.json();
+    })
+    .then((json) => {
+      project.value = json.data;
+    })
+    .catch(() => {
+      console.log("error");
+    })
+    .then(() => {
+      loading_project.value = false;
+    });
+}
 
 onMounted(() => {
   fetchTask();
@@ -131,8 +168,8 @@ onMounted(() => {
       <div>
         <strong>Due: {{ task.due }}</strong>
       </div>
-      <div>
-        <strong>Project: {{ task.project_id }}</strong>
+      <div v-if="!loading_project && project">
+        <strong>Project: {{ project.title }}</strong>
       </div>
 
       <div v-if="task.is_completed">
