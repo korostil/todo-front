@@ -38,6 +38,11 @@ const router = createRouter({
       name: "update_task",
       component: () => import("../views/tasks/CreateTaskView.vue"),
     },
+    {
+      path: "/tasks/completed/",
+      name: "completed_tasks",
+      component: () => import("../views/tasks/CompletedTaskView.vue"),
+    },
   ],
 });
 

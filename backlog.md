@@ -4,7 +4,7 @@
 - [x] add project picker to task view
 - [x] show which project the task belongs to
 - [x] hide completed tasks from main view
-- [ ] add view with all completed tasks (blocked: add filter on the backend)
+- [x] add view with all completed tasks
 
 # Backlog
 - [ ] add goal picker to project views

@@ -56,7 +56,7 @@ onMounted(() => {
     <router-link
       class="task"
       :to="{ name: 'task', params: { task_id: task.id } }"
-      :class="{ completed: task.is_completed, decisive: task.decisive }"
+      :class="{ decisive: task.decisive }"
     >
       <div>
         <div class="task-title">{{ task.title }}</div>
@@ -89,9 +89,5 @@ onMounted(() => {
 }
 .task-description {
   color: #888a85;
-}
-.completed {
-  text-decoration: line-through;
-  text-decoration-color: white;
 }
 </style>
