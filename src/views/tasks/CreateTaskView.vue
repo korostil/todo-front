@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 // TODO move variables to one shared place
@@ -19,6 +19,7 @@ let task = ref({
   due: null,
   project_id: null,
 });
+const projects = ref(null);
 let token = "Bearer " + todo_api_token;
 
 if (task_id) {
@@ -28,7 +29,14 @@ if (task_id) {
   action_url = todo_api_url + "/api/private/v1/tasks/";
 }
 
+function handle_project_id() {
+  if (task.value.project_id === "null") {
+    task.value.project_id = null;
+  }
+}
+
 function createTask() {
+  handle_project_id();
   return fetch(action_url, {
     method: "post",
     body: JSON.stringify(task.value),
@@ -55,6 +63,7 @@ function createTask() {
 }
 
 function updateTask() {
+  handle_project_id();
   return fetch(action_url, {
     method: "put",
     body: JSON.stringify(task.value),
@@ -104,6 +113,37 @@ function fetchTask() {
       loading.value = false;
     });
 }
+
+function fetchProjects() {
+  let url = todo_api_url + "/api/private/v1/projects/",
+    token = "Bearer " + todo_api_token;
+  return fetch(url, {
+    method: "get",
+    headers: { "content-type": "application/json", Authorization: token },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        const error = new Error(res.statusText);
+        error.json = res.json();
+        throw error;
+      }
+
+      return res.json();
+    })
+    .then((json) => {
+      projects.value = json.data;
+    })
+    .catch(() => {
+      console.log("error");
+    })
+    .then(() => {
+      loading.value = false;
+    });
+}
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <template>
@@ -134,10 +174,24 @@ function fetchTask() {
       <label for="two">Work space</label>
     </div>
     <div>
-      <input v-model="task.due" placeholder="Due" type="datetime-local" />
+      <input
+        class="task-due"
+        v-model="task.due"
+        placeholder="Due"
+        type="datetime-local"
+      />
     </div>
     <div>
-      <input v-model="task.project_id" placeholder="Project" type="text" />
+      <select class="task-project" v-model="task.project_id">
+        <option value="null">With no project</option>
+        <option
+          v-for="project in projects"
+          :value="project.id"
+          :key="project.id"
+        >
+          {{ project.title }}
+        </option>
+      </select>
     </div>
 
     <div v-if="task_id">
@@ -149,4 +203,15 @@ function fetchTask() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.task-project {
+  padding: 8px;
+  margin: 8px 0;
+  width: 320px;
+}
+.task-due {
+  padding: 4px 8px;
+  margin: 8px 0;
+  width: 300px;
+}
+</style>
