@@ -9,7 +9,7 @@ defineProps({
     <router-link
       class="task"
       :to="{ name: 'task', params: { task_id: task.id } }"
-      :class="{ completed: task.is_completed }"
+      :class="{ completed: task.is_completed, decisive: task.decisive }"
     >
       <div class="task-title">{{ task.title }}</div>
       <div class="task-description">{{ task.description }}</div>
@@ -18,6 +18,9 @@ defineProps({
 </template>
 
 <style scoped>
+.decisive {
+  background-color: rgba(249, 38, 114, 0.3);
+}
 .task {
   padding: 8px 16px;
   text-decoration: none;

@@ -1,10 +1,10 @@
 ## v1
 - [x] show project color
+- [x] show task as a decisive task
 - [ ] hide completed tasks
 - [ ] show which project the task belongs to
 - [ ] add project picker to task views
 - [ ] add view with all completed tasks
-- [ ] show task as a decisive task
 
 # Backlog
 - [ ] add goal picker to project views
@@ -18,6 +18,7 @@
 - [ ] take all requests to backend and put into one place
 - [ ] remind to complete project if all tasks are completed
 - [ ] show goal color
+- [ ] add task sorting
 
 # Done
 
