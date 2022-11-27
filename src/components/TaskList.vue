@@ -10,7 +10,7 @@ const tasks = ref(null);
 const loading = ref(true);
 
 function fetchTasks() {
-  let url = todo_api_url + "/api/private/v1/tasks/",
+  let url = todo_api_url + "/api/private/v1/tasks/?completed=false",
     token = "Bearer " + todo_api_token;
   return fetch(url, {
     method: "get",
