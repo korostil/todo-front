@@ -1,8 +1,7 @@
 ## v1
-- [ ] enhance tasks list
+- [x] enhance tasks list
 	- [x] show due date
-	- [ ] filter by space
-	- [ ] sorting
+	- [x] filter by space
 - [ ] add all projects page
   - [ ] filter by archived
   - [ ] filter by completed
