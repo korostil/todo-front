@@ -59,6 +59,7 @@ onMounted(() => {
       :class="{ decisive: task.decisive }"
     >
       <div>
+        <div class="task-due">{{ task.due }}</div>
         <div class="task-title">{{ task.title }}</div>
         <div class="task-description">{{ task.description }}</div>
       </div>
@@ -89,5 +90,8 @@ onMounted(() => {
 }
 .task-description {
   color: #888a85;
+}
+.task-due {
+  color: white;
 }
 </style>

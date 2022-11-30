@@ -1,10 +1,33 @@
 ## v1
-- [x] show project color
-- [x] show task as a decisive task
-- [x] add project picker to task view
-- [x] show which project the task belongs to
-- [x] hide completed tasks from main view
-- [x] add view with all completed tasks
+- [ ] enhance tasks list
+	- [x] show due date
+	- [ ] filter by space
+	- [ ] sorting
+- [ ] add all projects page
+  - [ ] filter by archived
+  - [ ] filter by completed
+  - [ ] filter by active
+  - [ ] search
+- [ ] add all tasks page
+  - [ ] filter by archived
+  - [ ] filter by completed
+  - [ ] filter by active
+  - [ ] search
+- [ ] add all goals page
+  - [ ] filter by archived
+  - [ ] filter by completed
+  - [ ] filter by active
+  - [ ] search
+- [ ] add review page
+  - [ ] daily
+  - [ ] weekly
+  - [ ] monthly
+  - [ ] yearly
+- [ ] add focuses page
+  - [ ] daily
+  - [ ] weekly
+  - [ ] monthly
+  - [ ] yearly
 
 # Backlog
 - [ ] add goal picker to project views
@@ -20,6 +43,7 @@
 - [ ] show goal color
 - [ ] add task sorting
 - [ ] save projects data to local storage
+- [ ] prettify due date in tasks list
 
 # Done
 
@@ -41,3 +65,9 @@
 - [x] navigate to main page
 - [x] extend task fields
 - [x] extend project fields
+- [x] show project color
+- [x] show task as a decisive task
+- [x] add project picker to task view
+- [x] show which project the task belongs to
+- [x] hide completed tasks from main view
+- [x] add view with all completed tasks
