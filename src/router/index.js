@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { routes as tasks_routes } from "@/router/tasks";
+import { routes as projects_routes } from "@/router/projects";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,47 +10,7 @@ const router = createRouter({
       name: "main",
       component: () => import("../views/MainView.vue"),
     },
-    {
-      path: "/projects/new/",
-      name: "new_project",
-      component: () => import("../views/projects/CreateProjectView.vue"),
-    },
-    {
-      path: "/projects/",
-      name: "projects_list",
-      component: () => import("../views/projects/ProjectsListView.vue"),
-    },
-    {
-      path: "/projects/:project_id/",
-      name: "project",
-      component: () => import("../views/projects/ProjectView.vue"),
-    },
-    {
-      path: "/projects/:project_id/update/",
-      name: "update_project",
-      component: () => import("../views/projects/CreateProjectView.vue"),
-    },
-    {
-      path: "/tasks/new/",
-      name: "new_task",
-      component: () => import("../views/tasks/CreateTaskView.vue"),
-    },
-    {
-      path: "/tasks/:task_id/",
-      name: "task",
-      component: () => import("../views/tasks/TaskView.vue"),
-    },
-    {
-      path: "/tasks/:task_id/update/",
-      name: "update_task",
-      component: () => import("../views/tasks/CreateTaskView.vue"),
-    },
-    {
-      path: "/tasks/completed/",
-      name: "completed_tasks",
-      component: () => import("../views/tasks/CompletedTaskView.vue"),
-    },
-  ],
+  ].concat(tasks_routes, projects_routes),
 });
 
 export default router;
