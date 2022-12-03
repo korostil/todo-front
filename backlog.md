@@ -2,20 +2,15 @@
 - [x] enhance tasks list
 	- [x] show due date
 	- [x] filter by space
-- [ ] add all projects page
-  - [ ] filter by archived
-  - [ ] filter by completed
-  - [ ] filter by active
-  - [ ] search
+- [x] add all projects page
+  - [x] filter by archived
+  - [x] search
 - [ ] add all tasks page
-  - [ ] filter by archived
   - [ ] filter by completed
   - [ ] filter by active
   - [ ] search
 - [ ] add all goals page
   - [ ] filter by archived
-  - [ ] filter by completed
-  - [ ] filter by active
   - [ ] search
 - [ ] add review page
   - [ ] daily
@@ -29,6 +24,10 @@
   - [ ] yearly
 
 # Backlog
+- [ ] add filter projects
+  - [ ] by space
+  - [ ] by goal
+- [ ] append delay on search fields
 - [ ] add goal picker to project views
 - [ ] implement "actions" button in projects list view
 	- [ ] add "info" option

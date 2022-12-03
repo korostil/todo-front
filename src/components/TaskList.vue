@@ -13,7 +13,7 @@ const space_ref = ref(null);
 function fetchTasks(space) {
   let url = todo_api_url + "/api/private/v1/tasks/?completed=false",
     token = "Bearer " + todo_api_token;
-  if (space !== "null") {
+  if (space !== null && space !== "null") {
     url = url + "&space=" + space;
   }
   return fetch(url, {
