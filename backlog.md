@@ -5,12 +5,12 @@
 - [x] add all projects page
   - [x] filter by archived
   - [x] search
+- [x] add all goals page
+  - [x] filter by archived
+  - [x] search
 - [ ] add all tasks page
   - [ ] filter by completed
   - [ ] filter by active
-  - [ ] search
-- [ ] add all goals page
-  - [ ] filter by archived
   - [ ] search
 - [ ] add review page
   - [ ] daily

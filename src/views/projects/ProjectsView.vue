@@ -14,6 +14,9 @@ const router = useRouter();
     <button class="btn orange" @click="router.push({ name: 'projects_list' })">
       projects list
     </button>
+    <button class="btn orange" @click="router.push({ name: 'goals_list' })">
+      goals list
+    </button>
   </div>
 </template>
 
