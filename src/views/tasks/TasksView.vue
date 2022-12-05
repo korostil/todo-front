@@ -12,6 +12,11 @@ const router = useRouter();
       + task
     </button>
   </div>
+  <div>
+    <button class="btn green" @click="router.push({ name: 'tasks_list' })">
+      show tasks list
+    </button>
+  </div>
 </template>
 
 <style scoped></style>

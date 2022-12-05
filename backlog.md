@@ -8,10 +8,9 @@
 - [x] add all goals page
   - [x] filter by archived
   - [x] search
-- [ ] add all tasks page
-  - [ ] filter by completed
-  - [ ] filter by active
-  - [ ] search
+- [x] add all tasks page
+  - [x] filter by completed
+  - [x] search
 - [ ] add review page
   - [ ] daily
   - [ ] weekly
