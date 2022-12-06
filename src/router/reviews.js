@@ -14,4 +14,9 @@ export const routes = [
     name: "monthly_review",
     component: () => import("../views/reviews/MonthlyReviewView.vue"),
   },
+  {
+    path: "/reviews/yearly/",
+    name: "yearly_review",
+    component: () => import("../views/reviews/YearlyReviewView.vue"),
+  },
 ];

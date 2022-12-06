@@ -11,11 +11,11 @@
 - [x] add all tasks page
   - [x] filter by completed
   - [x] search
-- [ ] add review page
+- [x] add review page
   - [x] daily
   - [x] weekly
   - [x] monthly
-  - [ ] yearly
+  - [x] yearly
 - [ ] add focuses page
   - [ ] daily
   - [ ] weekly
