@@ -12,7 +12,7 @@
   - [x] filter by completed
   - [x] search
 - [ ] add review page
-  - [ ] daily
+  - [x] daily
   - [ ] weekly
   - [ ] monthly
   - [ ] yearly

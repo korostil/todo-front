@@ -17,6 +17,11 @@ const router = useRouter();
       show tasks list
     </button>
   </div>
+  <div>
+    <button class="btn green" @click="router.push({ name: 'daily_review' })">
+      make daily review
+    </button>
+  </div>
 </template>
 
 <style scoped></style>
