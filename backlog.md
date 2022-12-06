@@ -13,7 +13,7 @@
   - [x] search
 - [ ] add review page
   - [x] daily
-  - [ ] weekly
+  - [x] weekly
   - [ ] monthly
   - [ ] yearly
 - [ ] add focuses page
