@@ -1,28 +1,17 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { readProject } from "@/store/api/projects";
 
 const props = defineProps({
   task: Object,
 });
-
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
 
 const project = ref(null);
 const loading = ref(true);
 
 function fetchProject() {
   if (props.task.project_id) {
-    let fetch_url =
-        todo_api_url +
-        "/api/private/v1/projects/" +
-        props.task.project_id +
-        "/",
-      token = "Bearer " + todo_api_token;
-    return fetch(fetch_url, {
-      method: "get",
-      headers: { "content-type": "application/json", Authorization: token },
-    })
+    return readProject(props.task.project_id)
       .then((res) => {
         if (!res.ok) {
           const error = new Error(res.statusText);

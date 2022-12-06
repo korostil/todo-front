@@ -1,17 +1,15 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-// TODO move variables to one shared place
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+import { createTask, readTask, updateTask } from "@/store/api/tasks";
+import { readProjectList } from "@/store/api/projects";
 
 const route = useRoute();
 const router = useRouter();
 
 const task_id = route.params.task_id;
 const loading = ref(true);
-let action_url = null;
+
 let task = ref({
   title: null,
   description: null,
@@ -20,13 +18,9 @@ let task = ref({
   project_id: null,
 });
 const projects = ref(null);
-let token = "Bearer " + todo_api_token;
 
 if (task_id) {
-  action_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/";
   fetchTask();
-} else {
-  action_url = todo_api_url + "/api/private/v1/tasks/";
 }
 
 function handle_project_id() {
@@ -35,13 +29,9 @@ function handle_project_id() {
   }
 }
 
-function createTask() {
+function doCreate() {
   handle_project_id();
-  return fetch(action_url, {
-    method: "post",
-    body: JSON.stringify(task.value),
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return createTask(task.value)
     .then((res) => {
       if (res.status !== 201) {
         const error = new Error(res.statusText);
@@ -62,13 +52,9 @@ function createTask() {
     });
 }
 
-function updateTask() {
+function doUpdate() {
   handle_project_id();
-  return fetch(action_url, {
-    method: "put",
-    body: JSON.stringify(task.value),
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return updateTask(task_id, task.value)
     .then((res) => {
       if (res.status !== 200) {
         const error = new Error(res.statusText);
@@ -90,10 +76,7 @@ function updateTask() {
 }
 
 function fetchTask() {
-  return fetch(action_url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return readTask(task_id)
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -115,12 +98,7 @@ function fetchTask() {
 }
 
 function fetchProjects() {
-  let url = todo_api_url + "/api/private/v1/projects/",
-    token = "Bearer " + todo_api_token;
-  return fetch(url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return readProjectList({})
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -195,10 +173,10 @@ onMounted(() => {
     </div>
 
     <div v-if="task_id">
-      <button class="btn orange" @click="updateTask">Update</button>
+      <button class="btn orange" @click="doUpdate">Update</button>
     </div>
     <div v-else>
-      <button class="btn green" @click="createTask">Save</button>
+      <button class="btn green" @click="doCreate">Save</button>
     </div>
   </div>
 </template>

@@ -21,6 +21,8 @@
   - [ ] weekly
   - [ ] monthly
   - [ ] yearly
+- [x] take all requests to backend and put into one place
+
 
 # Backlog
 - [ ] add filter projects
@@ -35,7 +37,6 @@
 - [ ] refactor README.md
 - [ ] add delete confirmation modal view (or timeout to cancel)
 - [ ] scroll tasks and projects separately
-- [ ] take all requests to backend and put into one place
 - [ ] remind to complete project if all tasks are completed
 - [ ] show goal color
 - [ ] add task sorting

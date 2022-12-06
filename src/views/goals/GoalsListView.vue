@@ -2,10 +2,7 @@
 import GoalItem from "@/components/GoalItem.vue";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-
-// TODO move variables to one shared place
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+import { readGoalList } from "@/store/api/goals";
 
 const router = useRouter();
 
@@ -15,21 +12,7 @@ const archived_ref = ref(null);
 const search_ref = ref(null);
 
 function fetchGoals(archived, search) {
-  let url = new URL(todo_api_url + "/api/private/v1/goals/"),
-    token = "Bearer " + todo_api_token;
-
-  if (archived !== null && archived !== "null") {
-    url.searchParams.append("archived", archived);
-  }
-
-  if (search !== null && search !== "null") {
-    url.searchParams.append("search", search);
-  }
-
-  return fetch(url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  readGoalList({ archived: archived, search: search })
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);

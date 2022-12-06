@@ -1,17 +1,18 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-// TODO move variables to one shared place
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+import {
+  createProject,
+  readProject,
+  updateProject,
+} from "@/store/api/projects";
 
 const route = useRoute();
 const router = useRouter();
 
 const project_id = route.params.project_id;
 const loading = ref(true);
-let action_url = null;
+
 let project = ref({
   title: null,
   description: null,
@@ -19,21 +20,13 @@ let project = ref({
   goal_id: null,
   space: null,
 });
-let token = "Bearer " + todo_api_token;
 
 if (project_id) {
-  action_url = todo_api_url + "/api/private/v1/projects/" + project_id + "/";
   fetchProject();
-} else {
-  action_url = todo_api_url + "/api/private/v1/projects/";
 }
 
-function createProject() {
-  return fetch(action_url, {
-    method: "post",
-    body: JSON.stringify(project.value),
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doCreate() {
+  return createProject(project.value)
     .then((res) => {
       if (res.status !== 201) {
         const error = new Error(res.statusText);
@@ -54,12 +47,8 @@ function createProject() {
     });
 }
 
-function updateProject() {
-  return fetch(action_url, {
-    method: "put",
-    body: JSON.stringify(project.value),
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doUpdate() {
+  return updateProject(project_id, project.value)
     .then((res) => {
       if (res.status !== 200) {
         const error = new Error(res.statusText);
@@ -81,10 +70,7 @@ function updateProject() {
 }
 
 function fetchProject() {
-  return fetch(action_url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return readProject(project_id)
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -141,10 +127,10 @@ function fetchProject() {
     </div>
 
     <div v-if="project_id">
-      <button class="btn orange" @click="updateProject">Update</button>
+      <button class="btn orange" @click="doUpdate">Update</button>
     </div>
     <div v-else>
-      <button class="btn green" @click="createProject">Save</button>
+      <button class="btn green" @click="doCreate">Save</button>
     </div>
   </div>
 </template>

@@ -1,27 +1,18 @@
 <script setup>
-// TODO move variables to one shared place
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+import { deleteProject, readProject } from "@/store/api/projects";
 
 const route = useRoute();
 const router = useRouter();
 
 const project_id = route.params.project_id;
-let fetch_url = todo_api_url + "/api/private/v1/projects/" + project_id + "/",
-  delete_url = todo_api_url + "/api/private/v1/projects/" + project_id + "/",
-  token = "Bearer " + todo_api_token;
 
 const project = ref(null);
 const loading = ref(true);
 
 function fetchProject() {
-  return fetch(fetch_url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return readProject(project_id)
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -42,11 +33,8 @@ function fetchProject() {
     });
 }
 
-function deleteProject() {
-  fetch(delete_url, {
-    method: "delete",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doDelete() {
+  deleteProject(project_id)
     .then((res) => {
       if (res.status !== 204) {
         const error = new Error(res.statusText);
@@ -103,7 +91,7 @@ onMounted(() => {
         </button>
       </div>
       <div>
-        <button class="btn red" @click="deleteProject">Delete</button>
+        <button class="btn red" @click="doDelete">Delete</button>
       </div>
     </div>
   </div>

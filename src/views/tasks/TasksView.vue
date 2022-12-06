@@ -1,12 +1,12 @@
 <script setup>
-import TodoList from "@/components/TaskList.vue";
+import TaskList from "@/components/TaskList.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 </script>
 
 <template>
-  <todo-list />
+  <task-list />
   <div>
     <button class="btn green" @click="router.push({ name: 'new_task' })">
       + task

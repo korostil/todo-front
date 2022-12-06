@@ -1,21 +1,18 @@
 <script setup>
-// TODO move variables to one shared place
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+import {
+  completeTask,
+  deleteTask,
+  readTask,
+  reopenTask,
+} from "@/store/api/tasks";
+import { readProject } from "@/store/api/projects";
 
 const route = useRoute();
 const router = useRouter();
 
 const task_id = route.params.task_id;
-let fetch_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
-  delete_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/",
-  complete_url =
-    todo_api_url + "/api/private/v1/tasks/" + task_id + "/complete/",
-  reopen_url = todo_api_url + "/api/private/v1/tasks/" + task_id + "/reopen/",
-  token = "Bearer " + todo_api_token;
 
 const task = ref(null);
 const project = ref(null);
@@ -23,10 +20,7 @@ const loading = ref(true);
 const loading_project = ref(true);
 
 function fetchTask() {
-  return fetch(fetch_url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return readTask(task_id)
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -39,12 +33,7 @@ function fetchTask() {
     .then((json) => {
       task.value = json.data;
       if (json.data.project_id !== null) {
-        fetchProject(
-          todo_api_url +
-            "/api/private/v1/projects/" +
-            json.data.project_id +
-            "/"
-        );
+        fetchProject(json.data.project_id);
       } else {
         loading_project.value = false;
         project.value = { title: "With no project" };
@@ -58,11 +47,8 @@ function fetchTask() {
     });
 }
 
-function deleteTask() {
-  fetch(delete_url, {
-    method: "delete",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doDelete() {
+  deleteTask(task_id)
     .then((res) => {
       if (res.status !== 204) {
         const error = new Error(res.statusText);
@@ -78,11 +64,8 @@ function deleteTask() {
     });
 }
 
-function completeTask() {
-  fetch(complete_url, {
-    method: "post",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doComplete() {
+  completeTask(task_id)
     .then((res) => {
       if (res.status !== 200) {
         const error = new Error(res.statusText);
@@ -98,11 +81,8 @@ function completeTask() {
     });
 }
 
-function reopenTask() {
-  fetch(reopen_url, {
-    method: "post",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doReopen() {
+  reopenTask(task_id)
     .then((res) => {
       if (res.status !== 200) {
         const error = new Error(res.statusText);
@@ -117,11 +97,8 @@ function reopenTask() {
       console.log("error");
     });
 }
-function fetchProject(url) {
-  return fetch(url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function fetchProject(id) {
+  return readProject(id)
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -173,10 +150,10 @@ onMounted(() => {
       </div>
 
       <div v-if="task.is_completed">
-        <button class="btn green" @click="reopenTask">Reopen</button>
+        <button class="btn green" @click="doReopen">Reopen</button>
       </div>
       <div v-else>
-        <button class="btn green" @click="completeTask">Complete</button>
+        <button class="btn green" @click="doComplete">Complete</button>
       </div>
       <div>
         <button
@@ -192,7 +169,7 @@ onMounted(() => {
         </button>
       </div>
       <div>
-        <button class="btn red" @click="deleteTask">Delete</button>
+        <button class="btn red" @click="doDelete">Delete</button>
       </div>
     </div>
   </div>

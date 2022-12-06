@@ -1,35 +1,23 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-// TODO move variables to one shared place
-const todo_api_url = import.meta.env.VITE_TODO_API_URL;
-const todo_api_token = import.meta.env.VITE_TODO_API_TOKEN;
+import { createGoal, readGoal, updateGoal } from "@/store/api/goals";
 
 const route = useRoute();
 const router = useRouter();
 
 const goal_id = route.params.goal_id;
 const loading = ref(true);
-let action_url = null;
 let goal = ref({
   title: null,
 });
-let token = "Bearer " + todo_api_token;
 
 if (goal_id) {
-  action_url = todo_api_url + "/api/private/v1/goals/" + goal_id + "/";
   fetchGoal();
-} else {
-  action_url = todo_api_url + "/api/private/v1/goals/";
 }
 
-function createGoal() {
-  return fetch(action_url, {
-    method: "post",
-    body: JSON.stringify(goal.value),
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doCreate() {
+  return createGoal(goal.value)
     .then((res) => {
       if (res.status !== 201) {
         const error = new Error(res.statusText);
@@ -50,12 +38,8 @@ function createGoal() {
     });
 }
 
-function updateGoal() {
-  return fetch(action_url, {
-    method: "put",
-    body: JSON.stringify(goal.value),
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+function doUpdate() {
+  return updateGoal(goal_id, goal.value)
     .then((res) => {
       if (res.status !== 200) {
         const error = new Error(res.statusText);
@@ -77,10 +61,7 @@ function updateGoal() {
 }
 
 function fetchGoal() {
-  return fetch(action_url, {
-    method: "get",
-    headers: { "content-type": "application/json", Authorization: token },
-  })
+  return readGoal()
     .then((res) => {
       if (!res.ok) {
         const error = new Error(res.statusText);
@@ -117,10 +98,10 @@ function fetchGoal() {
     </div>
 
     <div v-if="goal_id">
-      <button class="btn orange" @click="updateGoal">Update</button>
+      <button class="btn orange" @click="doUpdate">Update</button>
     </div>
     <div v-else>
-      <button class="btn green" @click="createGoal">Save</button>
+      <button class="btn green" @click="doCreate">Save</button>
     </div>
   </div>
 </template>
