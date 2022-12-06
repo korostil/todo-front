@@ -14,7 +14,7 @@
 - [ ] add review page
   - [x] daily
   - [x] weekly
-  - [ ] monthly
+  - [x] monthly
   - [ ] yearly
 - [ ] add focuses page
   - [ ] daily

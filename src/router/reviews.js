@@ -9,4 +9,9 @@ export const routes = [
     name: "weekly_review",
     component: () => import("../views/reviews/WeeklyReviewView.vue"),
   },
+  {
+    path: "/reviews/monthly/",
+    name: "monthly_review",
+    component: () => import("../views/reviews/MonthlyReviewView.vue"),
+  },
 ];
