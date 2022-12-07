@@ -47,6 +47,22 @@ export function readTaskList({
   });
 }
 
+export function readTodayTaskList() {
+  let url = entity_url + "today/";
+
+  return fetch(url, {
+    method: "get",
+    headers: todoAPIHeaders,
+  }).then((response) => {
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
+  });
+}
+
 export function readTask(id) {
   return fetch(entity_url + id + "/", {
     method: "get",
