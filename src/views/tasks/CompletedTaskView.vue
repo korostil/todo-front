@@ -8,15 +8,6 @@ const loading = ref(true);
 
 function fetchTasks() {
   return readTaskList({ completed: true })
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       tasks.value = json.data;
     })

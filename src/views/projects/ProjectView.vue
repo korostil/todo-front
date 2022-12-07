@@ -13,15 +13,6 @@ const loading = ref(true);
 
 function fetchProject() {
   return readProject(project_id)
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       project.value = json.data;
     })
@@ -35,13 +26,6 @@ function fetchProject() {
 
 function doDelete() {
   deleteProject(project_id)
-    .then((res) => {
-      if (res.status !== 204) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-    })
     .then(() => {
       router.push({ name: "main" });
     })

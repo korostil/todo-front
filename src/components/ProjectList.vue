@@ -8,15 +8,6 @@ const loading = ref(true);
 
 function fetchProjects() {
   return readProjectList({})
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       projects.value = json.data;
     })

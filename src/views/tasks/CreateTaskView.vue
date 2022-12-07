@@ -32,15 +32,6 @@ function handle_project_id() {
 function doCreate() {
   handle_project_id();
   return createTask(task.value)
-    .then((res) => {
-      if (res.status !== 201) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       router.push({ name: "task", params: { task_id: json.data.id } });
     })
@@ -55,15 +46,6 @@ function doCreate() {
 function doUpdate() {
   handle_project_id();
   return updateTask(task_id, task.value)
-    .then((res) => {
-      if (res.status !== 200) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       router.push({ name: "task", params: { task_id: json.data.id } });
     })
@@ -77,15 +59,6 @@ function doUpdate() {
 
 function fetchTask() {
   return readTask(task_id)
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       task.value = json.data;
     })
@@ -99,15 +72,6 @@ function fetchTask() {
 
 function fetchProjects() {
   return readProjectList({})
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       projects.value = json.data;
     })

@@ -12,15 +12,6 @@ const loading = ref(true);
 function fetchProject() {
   if (props.task.project_id) {
     return readProject(props.task.project_id)
-      .then((res) => {
-        if (!res.ok) {
-          const error = new Error(res.statusText);
-          error.json = res.json();
-          throw error;
-        }
-
-        return res.json();
-      })
       .then((json) => {
         project.value = json.data;
       })

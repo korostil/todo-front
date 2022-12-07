@@ -21,15 +21,6 @@ const loading_project = ref(true);
 
 function fetchTask() {
   return readTask(task_id)
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       task.value = json.data;
       if (json.data.project_id !== null) {
@@ -49,13 +40,6 @@ function fetchTask() {
 
 function doDelete() {
   deleteTask(task_id)
-    .then((res) => {
-      if (res.status !== 204) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-    })
     .then(() => {
       router.push({ name: "main" });
     })
@@ -66,13 +50,6 @@ function doDelete() {
 
 function doComplete() {
   completeTask(task_id)
-    .then((res) => {
-      if (res.status !== 200) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-    })
     .then(() => {
       router.push({ name: "main" });
     })
@@ -83,13 +60,6 @@ function doComplete() {
 
 function doReopen() {
   reopenTask(task_id)
-    .then((res) => {
-      if (res.status !== 200) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-    })
     .then(() => {
       router.push({ name: "main" });
     })
@@ -99,15 +69,6 @@ function doReopen() {
 }
 function fetchProject(id) {
   return readProject(id)
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       project.value = json.data;
     })

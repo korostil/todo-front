@@ -18,15 +18,6 @@ if (goal_id) {
 
 function doCreate() {
   return createGoal(goal.value)
-    .then((res) => {
-      if (res.status !== 201) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       router.push({ name: "goal", params: { goal_id: json.data.id } });
     })
@@ -40,15 +31,6 @@ function doCreate() {
 
 function doUpdate() {
   return updateGoal(goal_id, goal.value)
-    .then((res) => {
-      if (res.status !== 200) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       router.push({ name: "goal", params: { goal_id: json.data.id } });
     })
@@ -62,15 +44,6 @@ function doUpdate() {
 
 function fetchGoal() {
   return readGoal()
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       goal.value = json.data;
     })

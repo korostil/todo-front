@@ -9,15 +9,6 @@ const space_ref = ref(null);
 
 function fetchTasks(space) {
   return readTaskList({ space: space })
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       tasks.value = json.data;
     })

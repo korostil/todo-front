@@ -13,15 +13,6 @@ const search_ref = ref(null);
 
 function fetchTasks(completed, search) {
   return readTaskList({ completed: completed, search: search })
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       tasks.value = json.data;
     })

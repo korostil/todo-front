@@ -13,15 +13,6 @@ const search_ref = ref(null);
 
 function fetchGoals(archived, search) {
   readGoalList({ archived: archived, search: search })
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       goals.value = json.data;
     })

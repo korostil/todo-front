@@ -7,6 +7,13 @@ export function createGoal(body) {
     method: "post",
     body: JSON.stringify(body),
     headers: todoAPIHeaders,
+  }).then((response) => {
+    if (response.status !== 201) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
   });
 }
 
@@ -23,6 +30,13 @@ export function readGoalList({ archived = null, search = null }) {
   return fetch(url, {
     method: "get",
     headers: todoAPIHeaders,
+  }).then((response) => {
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
   });
 }
 
@@ -30,6 +44,13 @@ export function readGoal(id) {
   return fetch(entity_url + id + "/", {
     method: "get",
     headers: todoAPIHeaders,
+  }).then((response) => {
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
   });
 }
 
@@ -38,6 +59,13 @@ export function updateGoal(id, body) {
     method: "put",
     body: JSON.stringify(body),
     headers: todoAPIHeaders,
+  }).then((response) => {
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
   });
 }
 
@@ -45,5 +73,11 @@ export function deleteGoal(id) {
   return fetch(entity_url + id + "/", {
     method: "delete",
     headers: todoAPIHeaders,
+  }).then((response) => {
+    if (response.status !== 204) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
   });
 }

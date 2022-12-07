@@ -27,15 +27,6 @@ if (project_id) {
 
 function doCreate() {
   return createProject(project.value)
-    .then((res) => {
-      if (res.status !== 201) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       router.push({ name: "project", params: { project_id: json.data.id } });
     })
@@ -49,15 +40,6 @@ function doCreate() {
 
 function doUpdate() {
   return updateProject(project_id, project.value)
-    .then((res) => {
-      if (res.status !== 200) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       router.push({ name: "project", params: { project_id: json.data.id } });
     })
@@ -71,15 +53,6 @@ function doUpdate() {
 
 function fetchProject() {
   return readProject(project_id)
-    .then((res) => {
-      if (!res.ok) {
-        const error = new Error(res.statusText);
-        error.json = res.json();
-        throw error;
-      }
-
-      return res.json();
-    })
     .then((json) => {
       project.value = json.data;
     })
