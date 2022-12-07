@@ -63,6 +63,22 @@ export function readTodayTaskList() {
   });
 }
 
+export function readThisWeekTaskList() {
+  let url = entity_url + "this_week/";
+
+  return fetch(url, {
+    method: "get",
+    headers: todoAPIHeaders,
+  }).then((response) => {
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
+  });
+}
+
 export function readTask(id) {
   return fetch(entity_url + id + "/", {
     method: "get",
