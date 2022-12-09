@@ -16,9 +16,8 @@
   - [x] weekly
   - [x] monthly
   - [x] yearly
-- [ ] add focuses page
-  - [ ] daily
-  - [ ] weekly
+- [ ] add focuses pages
+  - [x] weekly
   - [ ] monthly
   - [ ] yearly
 - [x] take all requests to backend and put into one place

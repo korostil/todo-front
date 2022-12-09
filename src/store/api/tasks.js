@@ -21,6 +21,9 @@ export function readTaskList({
   completed = null,
   search = null,
   space = null,
+  decisive = null,
+  due_from = null,
+  due_to = null,
 }) {
   let url = entity_url;
   // TODO find a right way to check null value
@@ -32,6 +35,15 @@ export function readTaskList({
   }
   if (space !== null && space !== "null") {
     url.searchParams.set("space", space);
+  }
+  if (decisive !== null && decisive !== "null") {
+    url.searchParams.set("decisive", decisive);
+  }
+  if (due_from !== null && due_from !== "null") {
+    url.searchParams.set("due_from", due_from);
+  }
+  if (due_to !== null && due_to !== "null") {
+    url.searchParams.set("due_to", due_to);
   }
 
   return fetch(url, {
