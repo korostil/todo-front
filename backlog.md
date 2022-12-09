@@ -18,7 +18,7 @@
   - [x] yearly
 - [ ] add focuses pages
   - [x] weekly
-  - [ ] monthly
+  - [x] monthly
   - [ ] yearly
 - [x] take all requests to backend and put into one place
 

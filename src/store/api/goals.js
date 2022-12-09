@@ -1,6 +1,6 @@
 import { todoAPIHeaders, todoAPIUrl } from "@/store/api/base";
 
-const entity_url = todoAPIUrl + "/api/private/v1/goals/";
+const entity_url = new URL(todoAPIUrl + "/api/private/v1/goals/");
 
 export function createGoal(body) {
   return fetch(entity_url, {
@@ -17,7 +17,12 @@ export function createGoal(body) {
   });
 }
 
-export function readGoalList({ archived = null, search = null }) {
+export function readGoalList({
+  archived = null,
+  search = null,
+  month = null,
+  year = null,
+}) {
   let url = entity_url;
 
   if (archived !== null && archived !== "null") {
@@ -25,6 +30,13 @@ export function readGoalList({ archived = null, search = null }) {
   }
   if (search !== null && search !== "null") {
     url.searchParams.set("search", search);
+  }
+  if (month !== null && month !== "null") {
+    console.log(url);
+    url.searchParams.set("month", month);
+  }
+  if (year !== null && year !== "null") {
+    url.searchParams.set("year", year);
   }
 
   return fetch(url, {
