@@ -31,7 +31,7 @@ const router = useRouter();
 
 #tasks-view {
   height: 100%;
-  width: 960px;
+  width: 720px;
   padding: 16px;
 }
 </style>

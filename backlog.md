@@ -1,27 +1,7 @@
 ## v1
-- [x] enhance tasks list
-	- [x] show due date
-	- [x] filter by space
-- [x] add all projects page
-  - [x] filter by archived
-  - [x] search
-- [x] add all goals page
-  - [x] filter by archived
-  - [x] search
-- [x] add all tasks page
-  - [x] filter by completed
-  - [x] search
-- [x] add review page
-  - [x] daily
-  - [x] weekly
-  - [x] monthly
-  - [x] yearly
-- [x] add focuses pages
-  - [x] weekly
-  - [x] monthly
-  - [x] yearly
-- [x] take all requests to backend and put into one place
-
+- [x] prettify task-item
+- [ ] prettify project-item
+- [ ] sort tasks on the main view
 
 # Backlog
 - [ ] add filter projects
@@ -38,9 +18,7 @@
 - [ ] scroll tasks and projects separately
 - [ ] remind to complete project if all tasks are completed
 - [ ] show goal color
-- [ ] add task sorting
 - [ ] save projects data to local storage
-- [ ] prettify due date in tasks list
 
 # Done
 
@@ -68,3 +46,25 @@
 - [x] show which project the task belongs to
 - [x] hide completed tasks from main view
 - [x] add view with all completed tasks
+- - [x] enhance tasks list
+	- [x] show due date
+	- [x] filter by space
+- [x] add all projects page
+  - [x] filter by archived
+  - [x] search
+- [x] add all goals page
+  - [x] filter by archived
+  - [x] search
+- [x] add all tasks page
+  - [x] filter by completed
+  - [x] search
+- [x] add review page
+  - [x] daily
+  - [x] weekly
+  - [x] monthly
+  - [x] yearly
+- [x] add focuses pages
+  - [x] weekly
+  - [x] monthly
+  - [x] yearly
+- [x] take all requests to backend and put into one place
