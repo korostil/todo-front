@@ -1,6 +1,6 @@
 ## v1
 - [x] prettify task-item
-- [ ] prettify project-item
+- [x] prettify project-item
 - [ ] sort tasks on the main view
 
 # Backlog

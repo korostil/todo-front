@@ -33,8 +33,8 @@ const color = ref(props.project.color);
   background-color: #363636;
 }
 .project-color {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   margin-right: 4px;
   display: inline-block;
   border-radius: 50%;
