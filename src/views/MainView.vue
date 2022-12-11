@@ -1,9 +1,6 @@
 <script setup>
 import ProjectsView from "@/views/projects/ProjectsView.vue";
 import TasksView from "@/views/tasks/TasksView.vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 </script>
 
 <template>
@@ -11,12 +8,6 @@ const router = useRouter();
     <projects-view />
   </div>
   <div id="tasks-view">
-    <button
-      class="btn yellow"
-      @click="router.push({ name: 'completed_tasks' })"
-    >
-      Completed tasks
-    </button>
     <tasks-view />
   </div>
 </template>

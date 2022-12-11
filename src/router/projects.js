@@ -6,8 +6,8 @@ export const routes = [
   },
   {
     path: "/projects/",
-    name: "projects_list",
-    component: () => import("../views/projects/ProjectsListView.vue"),
+    name: "project_list",
+    component: () => import("../views/projects/ProjectListView.vue"),
   },
   {
     path: "/projects/:project_id/",

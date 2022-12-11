@@ -19,6 +19,7 @@
 - [ ] remind to complete project if all tasks are completed
 - [ ] show goal color
 - [ ] save projects data to local storage
+- [ ] show number of tasks in project (or progress bar)
 
 # Done
 

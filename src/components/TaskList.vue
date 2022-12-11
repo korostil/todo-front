@@ -8,7 +8,10 @@ const loading = ref(true);
 const space_ref = ref(null);
 
 function fetchTasks(space) {
-  return readTaskList({ space: space })
+  return readTaskList({
+    space: space,
+    completed: false,
+  })
     .then((json) => {
       tasks.value = json.data;
     })

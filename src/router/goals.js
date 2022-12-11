@@ -6,8 +6,8 @@ export const routes = [
   },
   {
     path: "/goals/",
-    name: "goals_list",
-    component: () => import("../views/goals/GoalsListView.vue"),
+    name: "goal_list",
+    component: () => import("../views/goals/GoalListView.vue"),
   },
   {
     path: "/goals/:goal_id/",

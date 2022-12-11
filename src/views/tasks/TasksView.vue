@@ -8,20 +8,24 @@ const router = useRouter();
 <template>
   <task-list />
   <div>
-    <button class="btn green" @click="router.push({ name: 'new_task' })">
+    <button
+      class="btn yellow"
+      @click="router.push({ name: 'completed_tasks' })"
+    >
+      Completed tasks
+    </button>
+    <button
+      class="btn green new-task"
+      @click="router.push({ name: 'new_task' })"
+    >
       + task
-    </button>
-  </div>
-  <div>
-    <button class="btn green" @click="router.push({ name: 'tasks_list' })">
-      show tasks list
-    </button>
-  </div>
-  <div>
-    <button class="btn green" @click="router.push({ name: 'daily_review' })">
-      make daily review
     </button>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.new-task {
+  display: inline;
+  float: right;
+}
+</style>

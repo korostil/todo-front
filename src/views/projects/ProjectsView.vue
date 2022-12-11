@@ -11,11 +11,17 @@ const router = useRouter();
     <button class="btn orange" @click="router.push({ name: 'new_project' })">
       + project
     </button>
-    <button class="btn orange" @click="router.push({ name: 'projects_list' })">
-      projects list
+    <button class="btn orange" @click="router.push({ name: 'project_list' })">
+      project list
     </button>
-    <button class="btn orange" @click="router.push({ name: 'goals_list' })">
-      goals list
+    <button class="btn orange" @click="router.push({ name: 'goal_list' })">
+      goal list
+    </button>
+    <button class="btn green" @click="router.push({ name: 'task_list' })">
+      show task list
+    </button>
+    <button class="btn green" @click="router.push({ name: 'daily_review' })">
+      make daily review
     </button>
   </div>
 </template>

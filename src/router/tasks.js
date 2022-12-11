@@ -1,8 +1,8 @@
 export const routes = [
   {
     path: "/tasks/",
-    name: "tasks_list",
-    component: () => import("../views/tasks/TasksListView.vue"),
+    name: "task_list",
+    component: () => import("../views/tasks/TaskListView.vue"),
   },
   {
     path: "/tasks/new/",

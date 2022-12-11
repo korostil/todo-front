@@ -62,7 +62,7 @@ onMounted(() => {
   padding: 8px 0 8px 16px;
   text-decoration: none;
   display: inline-block;
-  width: calc(100% - 32px);
+  width: calc(100% - 16px);
   height: 100%;
   border-bottom: 1px solid #363636;
 }
@@ -82,13 +82,11 @@ onMounted(() => {
   display: inline;
   color: #fd971f;
   float: left;
-  align-items: flex-end;
   font-size: 0.85em;
 }
 .task-project {
   display: inline;
   float: right;
-  align-items: flex-end;
   margin-top: -16px;
 }
 </style>
