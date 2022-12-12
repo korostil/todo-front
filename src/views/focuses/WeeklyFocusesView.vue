@@ -1,11 +1,7 @@
 <script setup>
 import { readTaskList } from "@/store/api/tasks";
 import { onMounted, ref } from "vue";
-import {
-  getMonday,
-  getSunday,
-  getUnixDate,
-} from "@/store/services/utils/dates";
+import { getMonday, getSunday, toUnixDate } from "@/store/services/utils/dates";
 import TaskItem from "@/components/TaskItem.vue";
 
 const decisive_tasks = ref(true);
@@ -15,8 +11,8 @@ function fetchTasks() {
   let today = new Date();
   return readTaskList({
     decisive: true,
-    due_from: getUnixDate(getMonday(today)),
-    due_to: getUnixDate(getSunday(today)),
+    due_from: toUnixDate(getMonday(today)),
+    due_to: toUnixDate(getSunday(today)),
   })
     .then((json) => {
       decisive_tasks.value = json.data;

@@ -27,7 +27,7 @@ export function getSunday(date) {
   return new Date(_date.setDate(diff));
 }
 
-export function getUnixDate(date) {
+export function toUnixDate(date) {
   if (date) {
     return date.toISOString().split("T")[0];
   }

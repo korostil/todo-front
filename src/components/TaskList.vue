@@ -2,6 +2,7 @@
 import TaskItem from "@/components/TaskItem.vue";
 import { ref, onMounted, watch } from "vue";
 import { readTaskList } from "@/store/api/tasks";
+import { toUnixDate } from "@/store/services/utils/dates";
 
 const tasks = ref(null);
 const loading = ref(true);
@@ -11,6 +12,7 @@ function fetchTasks(space) {
   return readTaskList({
     space: space,
     completed: false,
+    due_to: toUnixDate(new Date()),
   })
     .then((json) => {
       tasks.value = json.data;
