@@ -1,5 +1,6 @@
 import { todoAPIHeaders, todoAPIUrl } from "@/store/api/base";
 
+// TODO create new URL every time?
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/tasks/");
 
 export function createTask(body) {
@@ -25,7 +26,7 @@ export function readTaskList({
   due_from = null,
   due_to = null,
 }) {
-  let url = entity_url;
+  let url = new URL(todoAPIUrl + "/api/private/v1/tasks/");
   // TODO find a right way to check null value
   if (completed !== null && completed !== "null") {
     url.searchParams.set("completed", completed);

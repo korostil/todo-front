@@ -64,10 +64,6 @@ onMounted(() => {
   display: inline-block;
   width: calc(100% - 16px);
   height: 100%;
-  border-bottom: 1px solid #363636;
-}
-.task:hover {
-  background-color: #363636;
 }
 .task-title {
   font-size: 1.3em;

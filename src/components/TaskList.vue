@@ -1,7 +1,7 @@
 <script setup>
 import TaskItem from "@/components/TaskItem.vue";
 import { ref, onMounted, watch } from "vue";
-import { readTaskList } from "@/store/api/tasks";
+import { completeTask, readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
 
 const tasks = ref(null);
@@ -25,6 +25,16 @@ function fetchTasks(space) {
     });
 }
 
+function doComplete(task_id) {
+  completeTask(task_id)
+    .then(() => {
+      fetchTasks(space_ref.value);
+    })
+    .catch(() => {
+      console.log("error");
+    });
+}
+
 onMounted(() => {
   fetchTasks(null);
 });
@@ -43,8 +53,47 @@ watch(space_ref, () => {
     <label for="two">Work space</label>
   </div>
   <div v-if="!loading && tasks && tasks.length">
-    <task-item v-for="task in tasks" :task="task" :key="task.id" />
+    <div v-for="task in tasks" :key="task.id">
+      <div class="complete-container">
+        <input
+          class="complete-button"
+          type="checkbox"
+          @click="doComplete(task.id)"
+        />
+      </div>
+      <div>
+        <task-item :task="task" class="task-item" />
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.task-item {
+  padding-left: 40px;
+  border-bottom: 1px solid #363636;
+}
+.task-item:hover {
+  background-color: #363636;
+}
+.complete-container {
+  position: absolute;
+  padding: 12px 8px;
+}
+.complete-button {
+  width: 2em;
+  height: 2em;
+  background-color: #363636;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.complete-button:checked {
+  background-color: gray;
+}
+</style>
