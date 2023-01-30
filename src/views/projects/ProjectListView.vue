@@ -1,10 +1,9 @@
 <script setup>
-import ProjectItem from "@/components/ProjectItem.vue";
 import { ref, onMounted, watch } from "vue";
-import { useRouter } from "vue-router";
 import { readProjectList } from "@/store/api/projects";
-
-const router = useRouter();
+import TheHeader from "@/components/TheHeader.vue";
+import ProjectList from "@/components/ProjectList.vue";
+import ButtonNewProject from "@/components/ButtonNewProject.vue";
 
 const projects = ref(null);
 const loading = ref(true);
@@ -36,34 +35,41 @@ watch(search_ref, () => {
 </script>
 
 <template>
-  <div>
-    <button class="btn purple" @click="router.push({ name: 'main' })">
-      Back to mainpage
-    </button>
-  </div>
-  <div>
-    <input type="radio" value="null" v-model="archived_ref" />
-    <label for="null">Both</label>
-    <input type="radio" value="true" v-model="archived_ref" />
-    <label for="one">Archived</label>
-    <input type="radio" value="false" v-model="archived_ref" />
-    <label for="two">Active</label>
-  </div>
-  <div>
-    <input type="text" v-model="search_ref" placeholder="search here" />
-  </div>
-  <div v-if="!loading && projects && projects.length">
-    <project-item
-      v-for="project in projects"
-      :project="project"
-      :key="project.id"
-    />
-  </div>
-  <div>
-    <button class="btn orange" @click="router.push({ name: 'new_project' })">
-      + project
-    </button>
-  </div>
+  <v-app id="app">
+    <the-header></the-header>
+
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-spacer></v-spacer>
+          <v-col cols="12" sm="6">
+            <v-sheet rounded="lg" min-height="268">
+              <v-container>
+                <v-container>
+                  <v-row>
+                    <button-new-project></button-new-project>
+
+                    <v-spacer></v-spacer>
+
+                    <v-btn-toggle
+                      v-model="archived_ref"
+                      active-color="primary"
+                      multiple
+                    >
+                      <v-btn icon="mdi-progress-check"></v-btn>
+                      <v-btn icon="mdi-archive-outline"></v-btn>
+                    </v-btn-toggle>
+                  </v-row>
+                </v-container>
+                <project-list></project-list>
+              </v-container>
+            </v-sheet>
+          </v-col>
+          <v-spacer></v-spacer>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped></style>

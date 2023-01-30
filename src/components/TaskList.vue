@@ -44,28 +44,22 @@ watch(space_ref, () => {
 </script>
 
 <template>
-  <div>
-    <input type="radio" value="null" v-model="space_ref" />
-    <label for="null">Both</label>
-    <input type="radio" value="1" v-model="space_ref" />
-    <label for="one">Personal space</label>
-    <input type="radio" value="2" v-model="space_ref" />
-    <label for="two">Work space</label>
-  </div>
-  <div v-if="!loading && tasks && tasks.length">
-    <div v-for="task in tasks" :key="task.id">
-      <div class="complete-container">
-        <input
-          class="complete-button"
-          type="checkbox"
-          @click="doComplete(task.id)"
-        />
+  <v-container>
+    <v-list lines="two" v-if="!loading && tasks && tasks.length">
+      <div v-for="task in tasks" :key="task.id">
+        <div class="complete-container">
+          <input
+            class="complete-button"
+            type="checkbox"
+            @click="doComplete(task.id)"
+          />
+        </div>
+        <div>
+          <task-item :task="task" class="task-item" />
+        </div>
       </div>
-      <div>
-        <task-item :task="task" class="task-item" />
-      </div>
-    </div>
-  </div>
+    </v-list>
+  </v-container>
 </template>
 
 <style scoped>
