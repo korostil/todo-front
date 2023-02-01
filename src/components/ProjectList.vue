@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { readProjectList } from "@/store/api/projects";
+import { deleteProject, readProjectList } from "@/store/api/projects";
+import { useRouter } from "vue-router";
 
-const projects = ref(null);
+const router = useRouter();
+let projects = ref(null);
 const loading = ref(true);
-
-const menuItems = [{ title: "Edit" }, { title: "Remove" }];
+let dialog = ref(false);
 
 function fetchProjects() {
   return readProjectList({})
@@ -20,6 +21,20 @@ function fetchProjects() {
     });
 }
 
+function removeProject(project_id) {
+  dialog.value = false;
+  deleteProject(project_id);
+  // TODO optimization: there is a way to make it neat and tidy?
+  function removeValue(value, index, arr) {
+    if (value.id === project_id) {
+      arr.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+  projects.value.filter(removeValue);
+}
+
 onMounted(() => {
   fetchProjects();
 });
@@ -28,6 +43,7 @@ onMounted(() => {
 <template>
   <v-list lines="two">
     <v-list-subheader>PROJECTS</v-list-subheader>
+    <!-- TODO how to make v-list-item selectable and change task list from different component? -->
     <v-list-item
       v-for="project in projects"
       :key="project.id"
@@ -55,12 +71,40 @@ onMounted(() => {
           </template>
           <v-list>
             <v-list-item
-              v-for="(item, index) in menuItems"
-              :key="index"
-              :value="index"
+              @click="
+                router.push({
+                  name: 'update_project',
+                  params: { project_id: project.id },
+                })
+              "
             >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title>Edit</v-list-item-title>
             </v-list-item>
+
+            <v-dialog v-model="dialog" class="text-center">
+              <template v-slot:activator="{ props }">
+                <v-list-item v-bind="props"> Remove </v-list-item>
+              </template>
+
+              <v-card>
+                <v-card-text>
+                  Are you sure you want to remove project "{{ project.title }}"?
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" variant="text" @click="dialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    color="red-darken-1"
+                    @click="removeProject(project.id)"
+                  >
+                    Remove
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-list>
         </v-menu>
       </template>
