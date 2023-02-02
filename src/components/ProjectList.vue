@@ -81,7 +81,7 @@ onMounted(() => {
               <v-list-item-title>Edit</v-list-item-title>
             </v-list-item>
 
-            <v-dialog v-model="dialog" class="text-center">
+            <v-dialog v-model="dialog" max-width="30%" class="text-center">
               <template v-slot:activator="{ props }">
                 <v-list-item v-bind="props"> Remove </v-list-item>
               </template>
