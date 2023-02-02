@@ -3,9 +3,9 @@ import { ref } from "vue";
 import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
 
-let dialog = ref(false);
+const dialog = ref(false);
 const router = useRouter();
-let task = ref({});
+const task = ref({});
 
 function doCreate() {
   return createTask(task.value)
