@@ -91,7 +91,14 @@ onMounted(() => {
 
             <v-dialog v-model="dialog" max-width="30%" class="text-center">
               <template v-slot:activator="{ props }">
-                <v-list-item v-bind="props"> Remove </v-list-item>
+                <v-list-item>
+                  <v-btn
+                    variant="plain"
+                    prepend-icon="mdi-delete-outline"
+                    v-bind="props"
+                    >Remove</v-btn
+                  >
+                </v-list-item>
               </template>
 
               <v-card>

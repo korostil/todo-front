@@ -25,7 +25,7 @@ function doUpdate() {
   <v-dialog v-model="dialog" max-width="30%" rounded="lg">
     <template v-slot:activator="{ props }">
       <v-btn variant="plain" prepend-icon="mdi-update" v-bind="props">
-        update project
+        update
       </v-btn>
     </template>
 
