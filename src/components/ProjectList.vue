@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { deleteProject, readProjectList } from "@/store/api/projects";
 import { useRouter } from "vue-router";
+import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 
 const router = useRouter();
 let projects = ref(null);
@@ -35,6 +36,16 @@ function removeProject(project_id) {
   projects.value.filter(removeValue);
 }
 
+function doRefresh(updated_project) {
+  dialog.value = false;
+  let tmp_projects = Object.assign([], projects.value);
+  const index = tmp_projects.findIndex(
+    (obj) => obj.id === updated_project.value.id
+  );
+  tmp_projects[index] = updated_project.value;
+  projects.value = tmp_projects;
+}
+
 onMounted(() => {
   fetchProjects();
 });
@@ -60,7 +71,8 @@ onMounted(() => {
       </template>
 
       <template v-slot:append>
-        <v-menu>
+        <!-- TODO make menu disappear after successful project update -->
+        <v-menu close-on-content-click>
           <template v-slot:activator="{ props }">
             <v-btn
               color="grey-darken-1"
@@ -70,15 +82,11 @@ onMounted(() => {
             ></v-btn>
           </template>
           <v-list>
-            <v-list-item
-              @click="
-                router.push({
-                  name: 'update_project',
-                  params: { project_id: project.id },
-                })
-              "
-            >
-              <v-list-item-title>Edit</v-list-item-title>
+            <v-list-item>
+              <button-update-project
+                :project="project"
+                @project-updated="doRefresh"
+              ></button-update-project>
             </v-list-item>
 
             <v-dialog v-model="dialog" max-width="30%" class="text-center">

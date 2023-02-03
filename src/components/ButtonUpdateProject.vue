@@ -1,0 +1,73 @@
+<script setup>
+import { ref } from "vue";
+import { updateProject } from "@/store/api/projects";
+
+const emit = defineEmits(["projectUpdated"]);
+const props = defineProps({
+  project: Object,
+});
+const dialog = ref(false);
+const project = ref(Object.assign({}, props.project));
+
+function doUpdate() {
+  return updateProject(project.value.id, project.value)
+    .then(() => {
+      dialog.value = false;
+      emit("projectUpdated", project);
+    })
+    .catch(() => {
+      console.log("error");
+    });
+}
+</script>
+
+<template>
+  <v-dialog v-model="dialog" max-width="30%" rounded="lg">
+    <template v-slot:activator="{ props }">
+      <v-btn variant="plain" prepend-icon="mdi-update" v-bind="props">
+        update project
+      </v-btn>
+    </template>
+
+    <v-card>
+      <v-container>
+        <v-card-title>
+          <span class="text-h4">Update project</span>
+        </v-card-title>
+
+        <v-container>
+          <v-text-field
+            color="grey-darken-2"
+            label="Title"
+            v-model="project.title"
+          ></v-text-field>
+          <v-text-field
+            color="grey-darken-2"
+            label="Description"
+            v-model="project.description"
+          ></v-text-field>
+          <v-color-picker
+            label="Color"
+            v-model="project.color"
+          ></v-color-picker>
+          <v-text-field
+            color="grey-darken-2"
+            label="Goal"
+            v-model="project.goal_id"
+          ></v-text-field>
+          <v-btn-toggle v-model="project.space" active-color="primary">
+            <v-btn icon="mdi-account"></v-btn>
+            <v-btn icon="mdi-domain"></v-btn>
+          </v-btn-toggle>
+        </v-container>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="doUpdate"> Save </v-btn>
+        </v-card-actions>
+      </v-container>
+    </v-card>
+  </v-dialog>
+</template>
+
+<style scoped></style>
