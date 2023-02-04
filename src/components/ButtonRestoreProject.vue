@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from "vue";
 
-const emit = defineEmits(["projectArchived"]);
+const emit = defineEmits(["projectRestored"]);
 const props = defineProps({
   project: Object,
 });
 const dialog = ref(false);
 
-function onArchiveClick() {
-  emit("projectArchived", props.project.id);
+function onRestoreClick() {
+  emit("projectRestored", props.project.id);
   dialog.value = false;
 }
 </script>
@@ -17,20 +17,20 @@ function onArchiveClick() {
   <v-dialog v-model="dialog" max-width="30%" class="text-center">
     <template v-slot:activator="{ props }">
       <v-btn variant="plain" prepend-icon="mdi-archive-outline" v-bind="props"
-        >Archive</v-btn
+        >Restore</v-btn
       >
     </template>
 
     <v-card>
       <v-card-text>
-        Are you sure you want to archive project "{{ props.project.title }}"?
+        Are you sure you want to restore project "{{ props.project.title }}"?
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" variant="text" @click="dialog.value = false">
           Cancel
         </v-btn>
-        <v-btn color="red-darken-1" @click="onArchiveClick">Archive</v-btn>
+        <v-btn color="red-darken-1" @click="onRestoreClick"> Restore </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
     </v-card>

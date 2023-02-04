@@ -4,11 +4,13 @@ import {
   archiveProject,
   deleteProject,
   readProjectList,
+  restoreProject,
 } from "@/store/api/projects";
 import { useRouter } from "vue-router";
 import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
+import ButtonRestoreProject from "@/components/ButtonRestoreProject.vue";
 
 const router = useRouter();
 let projects = ref(null);
@@ -36,6 +38,11 @@ function doRemoveProject(project_id) {
 function doArchiveProject(project_id) {
   archiveProject(project_id);
   excludeProjectFromListAndCloseDialog(project_id);
+}
+
+function doRestoreProject(project_id) {
+  restoreProject(project_id);
+  dialog.value = false;
 }
 
 function excludeProjectFromListAndCloseDialog(project_id) {
@@ -82,7 +89,10 @@ onMounted(() => {
       "
     >
       <template v-slot:prepend>
-        <v-icon icon="mdi-circle" :color="project.color"></v-icon>
+        <v-icon
+          :icon="project.is_archived ? 'mdi-archive-outline' : 'mdi-circle'"
+          :color="project.color"
+        ></v-icon>
       </template>
 
       <template v-slot:append>
@@ -105,7 +115,13 @@ onMounted(() => {
             </v-list-item>
 
             <v-list-item>
+              <button-restore-project
+                v-if="project.is_archived"
+                :project="project"
+                @project-restored="doRestoreProject"
+              ></button-restore-project>
               <button-archive-project
+                v-else
                 :project="project"
                 @project-archived="doArchiveProject"
               ></button-archive-project>

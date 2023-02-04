@@ -6,6 +6,11 @@ const props = defineProps({
   project: Object,
 });
 const dialog = ref(false);
+
+function onRemoveClick() {
+  emit("projectRemoved", props.project.id);
+  dialog.value = false;
+}
 </script>
 
 <template>
@@ -26,15 +31,10 @@ const dialog = ref(false);
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" variant="text" @click="dialog = false">
+        <v-btn color="primary" variant="text" @click="dialog.value = false">
           Cancel
         </v-btn>
-        <v-btn
-          color="red-darken-1"
-          @click="emit('projectRemoved', props.project.id)"
-        >
-          Remove
-        </v-btn>
+        <v-btn color="red-darken-1" @click="onRemoveClick"> Remove </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
     </v-card>

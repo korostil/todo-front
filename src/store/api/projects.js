@@ -83,6 +83,20 @@ export function archiveProject(id) {
   });
 }
 
+export function restoreProject(id) {
+  return fetch(entity_url + id + "/restore/", {
+    method: "post",
+    headers: todoAPIHeaders,
+  }).then((response) => {
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      error.json = response.json();
+      throw error;
+    }
+    return response.json();
+  });
+}
+
 export function deleteProject(id) {
   return fetch(entity_url + id + "/", {
     method: "delete",
