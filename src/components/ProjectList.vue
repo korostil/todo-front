@@ -1,9 +1,14 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { deleteProject, readProjectList } from "@/store/api/projects";
+import {
+  archiveProject,
+  deleteProject,
+  readProjectList,
+} from "@/store/api/projects";
 import { useRouter } from "vue-router";
 import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
+import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
 
 const router = useRouter();
 let projects = ref(null);
@@ -23,9 +28,18 @@ function fetchProjects() {
     });
 }
 
-function removeProject(project_id) {
-  dialog.value = false;
+function doRemoveProject(project_id) {
   deleteProject(project_id);
+  excludeProjectFromListAndCloseDialog(project_id);
+}
+
+function doArchiveProject(project_id) {
+  archiveProject(project_id);
+  excludeProjectFromListAndCloseDialog(project_id);
+}
+
+function excludeProjectFromListAndCloseDialog(project_id) {
+  dialog.value = false;
   // TODO optimization: there is a way to make it neat and tidy?
   function removeValue(value, index, arr) {
     if (value.id === project_id) {
@@ -91,9 +105,16 @@ onMounted(() => {
             </v-list-item>
 
             <v-list-item>
+              <button-archive-project
+                :project="project"
+                @project-archived="doArchiveProject"
+              ></button-archive-project>
+            </v-list-item>
+
+            <v-list-item>
               <button-remove-project
                 :project="project"
-                @project-removed="removeProject"
+                @project-removed="doRemoveProject"
               ></button-remove-project>
             </v-list-item>
           </v-list>
