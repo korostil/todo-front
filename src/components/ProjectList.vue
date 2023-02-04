@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { deleteProject, readProjectList } from "@/store/api/projects";
 import { useRouter } from "vue-router";
 import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
+import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 
 const router = useRouter();
 let projects = ref(null);
@@ -89,37 +90,12 @@ onMounted(() => {
               ></button-update-project>
             </v-list-item>
 
-            <v-dialog v-model="dialog" max-width="30%" class="text-center">
-              <template v-slot:activator="{ props }">
-                <v-list-item>
-                  <v-btn
-                    variant="plain"
-                    prepend-icon="mdi-delete-outline"
-                    v-bind="props"
-                    >Remove</v-btn
-                  >
-                </v-list-item>
-              </template>
-
-              <v-card>
-                <v-card-text>
-                  Are you sure you want to remove project "{{ project.title }}"?
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" variant="text" @click="dialog = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    color="red-darken-1"
-                    @click="removeProject(project.id)"
-                  >
-                    Remove
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+            <v-list-item>
+              <button-remove-project
+                :project="project"
+                @project-removed="removeProject"
+              ></button-remove-project>
+            </v-list-item>
           </v-list>
         </v-menu>
       </template>
