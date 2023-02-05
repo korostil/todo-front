@@ -21,7 +21,7 @@ export function readProjectList({ archived = null, search = null }) {
   let url = entity_url;
 
   if (archived !== null && archived !== "null") {
-    url.searchParams.set("archived", archived);
+    url.searchParams.set("archived", (archived === "archived").toString());
   }
   if (search !== null && search !== "null") {
     url.searchParams.set("search", search);

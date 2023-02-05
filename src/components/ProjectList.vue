@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, toRef } from "vue";
 import {
   archiveProject,
   deleteProject,
@@ -12,21 +12,25 @@ import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
 import ButtonRestoreProject from "@/components/ButtonRestoreProject.vue";
 
+const props = defineProps({
+  archived: { type: String, required: false, default: null },
+  search: { type: String, required: false, default: null },
+});
 const router = useRouter();
 let projects = ref(null);
-const loading = ref(true);
 let dialog = ref(false);
+const archived = toRef(props, "archived");
 
 function fetchProjects() {
-  return readProjectList({})
+  return readProjectList({
+    archived: archived.value,
+    search: props.search,
+  })
     .then((json) => {
       projects.value = json.data;
     })
     .catch(() => {
       console.log("error");
-    })
-    .then(() => {
-      loading.value = false;
     });
 }
 
@@ -69,6 +73,10 @@ function doRefresh(updated_project) {
 }
 
 onMounted(() => {
+  fetchProjects();
+});
+
+watch(archived, () => {
   fetchProjects();
 });
 </script>

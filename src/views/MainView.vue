@@ -18,7 +18,7 @@ import ButtonAllTasks from "@/components/ButtonAllTasks.vue";
           <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
               <v-container>
-                <project-list></project-list>
+                <project-list :archived="false"></project-list>
                 <button-new-project></button-new-project>
                 <button-all-projects></button-all-projects>
               </v-container>
