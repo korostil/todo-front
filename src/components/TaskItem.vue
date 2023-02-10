@@ -1,88 +1,48 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { readProject } from "@/store/api/projects";
-import ProjectItemSimplified from "@/components/ProjectItemSimplified.vue";
 import { getFormattedDueDateTime } from "@/store/services/utils/dates";
 
-const props = defineProps({
-  task: Object,
-});
-
-const project = ref(null);
-const loading = ref(true);
-
-function fetchProject() {
-  if (props.task.project_id) {
-    return readProject(props.task.project_id)
-      .then((json) => {
-        project.value = json.data;
-      })
-      .catch(() => {
-        console.log("error");
-      })
-      .then(() => {
-        loading.value = false;
-      });
-  } else {
-    loading.value = false;
-  }
-}
-
-onMounted(() => {
-  fetchProject();
-});
+const props = defineProps({ task: Object });
 </script>
 
 <template>
-  <div>
-    <router-link
-      class="task"
-      :to="{ name: 'task', params: { task_id: task.id } }"
-      :class="{ decisive: task.decisive }"
-    >
+  <v-row>
+    <v-col cols="12" sm="1">
+      <v-btn size="small" variant="outlined" :icon="props.task.is_completed ? 'mdi-check' : ''" color="grey"></v-btn>
+    </v-col>
+    <v-col cols="12" sm="11">
       <div>
-        <div class="task-title">{{ task.title }}</div>
-        <div class="task-description">{{ task.description }}</div>
+        <span class="text-h5">{{ props.task.title }}</span>
       </div>
       <div>
-        <div class="task-due">{{ getFormattedDueDateTime(task.due) }}</div>
-        <div class="task-project" v-if="!loading && project">
-          <project-item-simplified :project="project" />
-        </div>
+        <span class="text-subtitle-1">{{ props.task.description }}</span>
       </div>
-    </router-link>
-  </div>
+      <v-row>
+        <v-col cols="12" sm="8">
+          <v-chip class="ml-0 pl-0 task-due" size="small" variant="text">
+            {{ getFormattedDueDateTime(props.task.due) }}
+          </v-chip>
+          <v-chip class="my-2 mx-1" color="#a6e22e" size="small" label>
+            some
+          </v-chip>
+          <v-chip class="my-2 mx-1" color="#e6db74" size="small" label>
+            different
+          </v-chip>
+          <v-chip class="my-2 mx-1" color="#51edbc" size="small" label>
+            tags
+          </v-chip>
+        </v-col>
+        <v-col cols="12" sm="4" class="d-flex justify-end">
+          <v-chip class="ma-2" color="green" size="small" variant="text">
+            Project name
+          </v-chip>
+        </v-col>
+      </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <style scoped>
-.decisive {
-  background-color: rgba(249, 38, 114, 0.3);
-}
-.task {
-  padding: 8px 0 8px 16px;
-  text-decoration: none;
-  display: inline-block;
-  width: calc(100% - 16px);
-  height: 100%;
-}
-.task-title {
-  font-size: 1.3em;
-  color: white;
-  padding-bottom: 2px;
-}
-.task-description {
-  color: #888a85;
-  padding-bottom: 8px;
-}
 .task-due {
-  display: inline;
   color: #fd971f;
-  float: left;
-  font-size: 0.85em;
-}
-.task-project {
-  display: inline;
-  float: right;
-  margin-top: -16px;
 }
 </style>

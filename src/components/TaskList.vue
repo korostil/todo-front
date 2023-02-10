@@ -5,13 +5,11 @@ import { completeTask, readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
 
 const tasks = ref(null);
-const loading = ref(true);
 const space_ref = ref(null);
 
 function fetchTasks(space) {
   return readTaskList({
     space: space,
-    completed: false,
     due_to: toUnixDate(new Date()),
   })
     .then((json) => {
@@ -19,9 +17,6 @@ function fetchTasks(space) {
     })
     .catch(() => {
       console.log("error");
-    })
-    .then(() => {
-      loading.value = false;
     });
 }
 
@@ -44,50 +39,17 @@ watch(space_ref, () => {
 </script>
 
 <template>
-  <v-container>
-    <v-list lines="two" v-if="!loading && tasks && tasks.length">
-      <div v-for="task in tasks" :key="task.id">
-        <div class="complete-container">
-          <input
-            class="complete-button"
-            type="checkbox"
-            @click="doComplete(task.id)"
-          />
-        </div>
-        <div>
-          <task-item :task="task" class="task-item" />
-        </div>
-      </div>
-    </v-list>
-  </v-container>
+  <v-list lines="two">
+    <v-list-item
+      v-for="task in tasks"
+      :key="task.id"
+      active-color="primary"
+      rounded="lg"
+      @click="true"
+    >
+      <task-item :task="task"></task-item>
+    </v-list-item>
+  </v-list>
 </template>
 
-<style scoped>
-.task-item {
-  padding-left: 40px;
-  border-bottom: 1px solid #363636;
-}
-.task-item:hover {
-  background-color: #363636;
-}
-.complete-container {
-  position: absolute;
-  padding: 12px 8px;
-}
-.complete-button {
-  width: 2em;
-  height: 2em;
-  background-color: #363636;
-  border-radius: 50%;
-  vertical-align: middle;
-  border: 1px solid #ddd;
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  cursor: pointer;
-}
-
-.complete-button:checked {
-  background-color: gray;
-}
-</style>
+<style scoped></style>
