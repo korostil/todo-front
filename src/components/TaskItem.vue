@@ -7,7 +7,12 @@ const props = defineProps({ task: Object });
 <template>
   <v-row>
     <v-col cols="12" sm="1">
-      <v-btn size="small" variant="outlined" :icon="props.task.is_completed ? 'mdi-check' : ''" color="grey"></v-btn>
+      <v-btn
+        size="small"
+        variant="outlined"
+        :icon="props.task.is_completed ? 'mdi-check' : ''"
+        color="grey"
+      ></v-btn>
     </v-col>
     <v-col cols="12" sm="11">
       <div>
