@@ -6,6 +6,9 @@ import ButtonNewProject from "@/components/ButtonNewProject.vue";
 import ButtonAllProjects from "@/components/ButtonAllProjects.vue";
 import ButtonNewTask from "@/components/ButtonNewTask.vue";
 import ButtonAllTasks from "@/components/ButtonAllTasks.vue";
+import FocusWeek from "@/components/FocusWeek.vue";
+import FocusMonth from "@/components/FocusMonth.vue";
+import FocusYear from "@/components/FocusYear.vue";
 </script>
 
 <template>
@@ -37,7 +40,11 @@ import ButtonAllTasks from "@/components/ButtonAllTasks.vue";
 
           <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
-              <!--  -->
+              <v-container>
+                <focus-week></focus-week>
+                <focus-month></focus-month>
+                <focus-year></focus-year>
+              </v-container>
             </v-sheet>
           </v-col>
         </v-row>
