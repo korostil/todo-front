@@ -9,6 +9,7 @@ import ButtonAllTasks from "@/components/ButtonAllTasks.vue";
 import FocusWeek from "@/components/FocusWeek.vue";
 import FocusMonth from "@/components/FocusMonth.vue";
 import FocusYear from "@/components/FocusYear.vue";
+import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
 </script>
 
 <template>
@@ -41,6 +42,7 @@ import FocusYear from "@/components/FocusYear.vue";
           <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
               <v-container>
+                <button-new-goal></button-new-goal>
                 <focus-week></focus-week>
                 <focus-month></focus-month>
                 <focus-year></focus-year>

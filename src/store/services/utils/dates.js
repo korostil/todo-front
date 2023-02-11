@@ -1,17 +1,18 @@
-const monthShortNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+export const monthMap = [
+  { shortName: "Jan", value: 1 },
+  { shortName: "Feb", value: 2 },
+  { shortName: "Mar", value: 3 },
+  { shortName: "Apr", value: 4 },
+  { shortName: "May", value: 5 },
+  { shortName: "Jun", value: 6 },
+  { shortName: "Jul", value: 7 },
+  { shortName: "Aug", value: 8 },
+  { shortName: "Sep", value: 9 },
+  { shortName: "Oct", value: 10 },
+  { shortName: "Nov", value: 11 },
+  { shortName: "Dec", value: 12 },
 ];
+const monthShortNames = monthMap.map((item) => item.shortName);
 
 export function getMonday(date) {
   let _date = new Date(date),
