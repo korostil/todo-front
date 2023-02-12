@@ -10,6 +10,7 @@ import FocusWeek from "@/components/FocusWeek.vue";
 import FocusMonth from "@/components/FocusMonth.vue";
 import FocusYear from "@/components/FocusYear.vue";
 import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
+import ButtonAllGoals from "@/components/ButtonAllGoals.vue";
 </script>
 
 <template>
@@ -22,9 +23,9 @@ import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
           <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
               <v-container>
-                <project-list :archived="false"></project-list>
                 <button-new-project></button-new-project>
                 <button-all-projects></button-all-projects>
+                <project-list :archived="false"></project-list>
               </v-container>
             </v-sheet>
           </v-col>
@@ -32,9 +33,9 @@ import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
           <v-col cols="12" sm="6">
             <v-sheet min-height="90vh" rounded="lg">
               <v-container>
-                <task-list></task-list>
                 <button-new-task></button-new-task>
                 <button-all-tasks></button-all-tasks>
+                <task-list></task-list>
               </v-container>
             </v-sheet>
           </v-col>
@@ -43,6 +44,7 @@ import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
             <v-sheet rounded="lg" min-height="268">
               <v-container>
                 <button-new-goal></button-new-goal>
+                <button-all-goals></button-all-goals>
                 <focus-week></focus-week>
                 <focus-month></focus-month>
                 <focus-year></focus-year>

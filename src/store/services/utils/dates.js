@@ -12,7 +12,7 @@ export const monthMap = [
   { shortName: "Nov", value: 11 },
   { shortName: "Dec", value: 12 },
 ];
-const monthShortNames = monthMap.map((item) => item.shortName);
+export const monthShortNames = monthMap.map((item) => item.shortName);
 
 export function getMonday(date) {
   let _date = new Date(date),

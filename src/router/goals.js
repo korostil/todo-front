@@ -4,9 +4,4 @@ export const routes = [
     name: "goal_list",
     component: () => import("../views/goals/GoalListView.vue"),
   },
-  {
-    path: "/goals/:goal_id/",
-    name: "goal",
-    component: () => import("../views/goals/GoalView.vue"),
-  },
 ];
