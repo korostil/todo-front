@@ -4,7 +4,7 @@ import TheHeader from "@/components/TheHeader.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import ButtonNewProject from "@/components/ButtonNewProject.vue";
 
-const archived = ref(null);
+const refArchived = ref(null);
 </script>
 
 <template>
@@ -24,16 +24,13 @@ const archived = ref(null);
 
                     <v-spacer></v-spacer>
 
-                    <v-btn-toggle v-model="archived" active-color="primary">
-                      <v-btn icon="mdi-progress-check" value="active"></v-btn>
-                      <v-btn
-                        icon="mdi-archive-outline"
-                        value="archived"
-                      ></v-btn>
+                    <v-btn-toggle v-model="refArchived" active-color="primary">
+                      <v-btn icon="mdi-progress-check" :value="false"></v-btn>
+                      <v-btn icon="mdi-archive-outline" :value="true"></v-btn>
                     </v-btn-toggle>
                   </v-row>
                 </v-container>
-                <project-list :archived="archived"></project-list>
+                <project-list :archived="refArchived"></project-list>
               </v-container>
             </v-sheet>
           </v-col>

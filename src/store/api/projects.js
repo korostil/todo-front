@@ -21,7 +21,7 @@ export function readProjectList({ archived = null, search = null }) {
   let url = new URL(todoAPIUrl + "/api/private/v1/projects/");
 
   if (archived !== null && archived !== "null") {
-    url.searchParams.set("archived", (archived === "archived").toString());
+    url.searchParams.set("archived", archived);
   }
   if (search !== null && search !== "null") {
     url.searchParams.set("search", search);
