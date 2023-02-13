@@ -1,4 +1,4 @@
-import { todoAPIHeaders, todoAPIUrl } from "@/store/api/base";
+import { todoAPIHeaders, todoAPIUrl, useFetch } from "@/store/api/base";
 
 // TODO create new URL every time?
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/tasks/");
@@ -20,11 +20,11 @@ export function createTask(body) {
 
 export function readTaskList({
   completed = null,
-  search = null,
-  space = null,
   decisive = null,
   due_from = null,
   due_to = null,
+  search = null,
+  space = null,
 }) {
   let url = new URL(todoAPIUrl + "/api/private/v1/tasks/");
   // TODO find a right way to check null value
@@ -47,49 +47,7 @@ export function readTaskList({
     url.searchParams.set("due_to", due_to);
   }
 
-  return fetch(url, {
-    method: "get",
-    headers: todoAPIHeaders,
-  }).then((response) => {
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      error.json = response.json();
-      throw error;
-    }
-    return response.json();
-  });
-}
-
-export function readTodayTaskList() {
-  let url = entity_url + "today/";
-
-  return fetch(url, {
-    method: "get",
-    headers: todoAPIHeaders,
-  }).then((response) => {
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      error.json = response.json();
-      throw error;
-    }
-    return response.json();
-  });
-}
-
-export function readThisWeekTaskList() {
-  let url = entity_url + "this_week/";
-
-  return fetch(url, {
-    method: "get",
-    headers: todoAPIHeaders,
-  }).then((response) => {
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      error.json = response.json();
-      throw error;
-    }
-    return response.json();
-  });
+  return useFetch(url);
 }
 
 export function readTask(id) {
