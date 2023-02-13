@@ -1,21 +1,10 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import ButtonNewTask from "@/components/ButtonNewTask.vue";
 import TaskList from "@/components/TaskList.vue";
 import TheHeader from "@/components/TheHeader.vue";
 
-const completed = ref(null),
-  refCompleted = ref(null);
-
-watch(completed, () => {
-  if (completed.value === "in_progress") {
-    refCompleted.value = false;
-  } else if (completed.value === "completed") {
-    refCompleted.value = true;
-  } else {
-    refCompleted.value = null;
-  }
-});
+const refCompleted = ref(null);
 </script>
 
 <template>
@@ -35,12 +24,9 @@ watch(completed, () => {
 
                     <v-spacer></v-spacer>
 
-                    <v-btn-toggle v-model="completed" active-color="primary">
-                      <v-btn
-                        icon="mdi-progress-check"
-                        value="in_progress"
-                      ></v-btn>
-                      <v-btn icon="mdi-check-all" value="completed"></v-btn>
+                    <v-btn-toggle v-model="refCompleted" active-color="primary">
+                      <v-btn icon="mdi-progress-check" :value="false"></v-btn>
+                      <v-btn icon="mdi-check-all" :value="true"></v-btn>
                     </v-btn-toggle>
                   </v-row>
                 </v-container>
