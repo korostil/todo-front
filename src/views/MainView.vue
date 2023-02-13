@@ -35,7 +35,7 @@ import ButtonAllGoals from "@/components/ButtonAllGoals.vue";
               <v-container>
                 <button-new-task></button-new-task>
                 <button-all-tasks></button-all-tasks>
-                <task-list></task-list>
+                <task-list :today="true"></task-list>
               </v-container>
             </v-sheet>
           </v-col>
