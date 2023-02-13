@@ -1,36 +1,20 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
-import { readTaskList } from "@/store/api/tasks";
+import { ref, watch } from "vue";
 import ButtonNewTask from "@/components/ButtonNewTask.vue";
 import TaskList from "@/components/TaskList.vue";
 import TheHeader from "@/components/TheHeader.vue";
 
-const tasks = ref(null);
-const loading = ref(true);
-const completed_ref = ref(null);
-const search_ref = ref(null);
+const completed = ref(null),
+  refCompleted = ref(null);
 
-function fetchTasks(completed, search) {
-  return readTaskList({ completed: completed, search: search })
-    .then((json) => {
-      tasks.value = json.data;
-    })
-    .catch(() => {
-      console.log("error");
-    })
-    .then(() => {
-      loading.value = false;
-    });
-}
-
-onMounted(() => {
-  fetchTasks(null, null);
-});
-watch(completed_ref, () => {
-  fetchTasks(completed_ref.value, search_ref.value);
-});
-watch(search_ref, () => {
-  fetchTasks(completed_ref.value, search_ref.value);
+watch(completed, () => {
+  if (completed.value === "in_progress") {
+    refCompleted.value = false;
+  } else if (completed.value === "completed") {
+    refCompleted.value = true;
+  } else {
+    refCompleted.value = null;
+  }
 });
 </script>
 
@@ -51,17 +35,16 @@ watch(search_ref, () => {
 
                     <v-spacer></v-spacer>
 
-                    <v-btn-toggle
-                      v-model="completed_ref"
-                      active-color="primary"
-                      multiple
-                    >
-                      <v-btn icon="mdi-progress-check"></v-btn>
-                      <v-btn icon="mdi-check-all"></v-btn>
+                    <v-btn-toggle v-model="completed" active-color="primary">
+                      <v-btn
+                        icon="mdi-progress-check"
+                        value="in_progress"
+                      ></v-btn>
+                      <v-btn icon="mdi-check-all" value="completed"></v-btn>
                     </v-btn-toggle>
                   </v-row>
                 </v-container>
-                <task-list></task-list>
+                <task-list :completed="refCompleted"></task-list>
               </v-container>
             </v-sheet>
           </v-col>
