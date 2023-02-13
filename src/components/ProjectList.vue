@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, toRef } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import {
   archiveProject,
   deleteProject,
@@ -11,27 +11,32 @@ import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
 import ButtonRestoreProject from "@/components/ButtonRestoreProject.vue";
+import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
 
 const props = defineProps({
-  archived: { type: String, required: false, default: null },
+  archived: { type: Boolean, required: false, default: null },
   search: { type: String, required: false, default: null },
 });
+const archived = ref(props.archived),
+  search = ref(props.search),
+  projects = ref(null),
+  loading_error = ref(null);
+
 const router = useRouter();
-let projects = ref(null);
 let dialog = ref(false);
-const archived = toRef(props, "archived");
 
 function fetchProjects() {
-  return readProjectList({
+  const { data, error } = readProjectList({
     archived: archived.value,
-    search: props.search,
-  })
-    .then((json) => {
-      projects.value = json.data;
-    })
-    .catch(() => {
-      console.log("error");
-    });
+    search: search.value,
+  });
+
+  watch(data, () => {
+    projects.value = data.value;
+  });
+  watch(error, () => {
+    loading_error.value = error.value;
+  });
 }
 
 function doRemoveProject(project_id) {
@@ -72,17 +77,19 @@ function doRefresh(updated_project) {
   projects.value = tmp_projects;
 }
 
-onMounted(() => {
-  fetchProjects();
-});
-
-watch(archived, () => {
+watchEffect(() => {
+  archived.value = props.archived;
+  search.value = props.search;
   fetchProjects();
 });
 </script>
 
 <template>
-  <v-list lines="two">
+  <snackbar-loading-failed
+    text="Failed to load project list. Please reload the page."
+    v-if="loading_error"
+  ></snackbar-loading-failed>
+  <v-list lines="two" v-else>
     <v-list-subheader>PROJECTS</v-list-subheader>
     <!-- TODO how to make v-list-item selectable and change task list from different component? -->
     <v-list-item

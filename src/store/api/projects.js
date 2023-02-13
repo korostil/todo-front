@@ -1,4 +1,4 @@
-import { todoAPIHeaders, todoAPIUrl } from "@/store/api/base";
+import { todoAPIHeaders, todoAPIUrl, useFetch } from "@/store/api/base";
 
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/projects/");
 
@@ -18,7 +18,7 @@ export function createProject(body) {
 }
 
 export function readProjectList({ archived = null, search = null }) {
-  let url = entity_url;
+  let url = new URL(todoAPIUrl + "/api/private/v1/projects/");
 
   if (archived !== null && archived !== "null") {
     url.searchParams.set("archived", (archived === "archived").toString());
@@ -27,17 +27,7 @@ export function readProjectList({ archived = null, search = null }) {
     url.searchParams.set("search", search);
   }
 
-  return fetch(url, {
-    method: "get",
-    headers: todoAPIHeaders,
-  }).then((response) => {
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      error.json = response.json();
-      throw error;
-    }
-    return response.json();
-  });
+  return useFetch(url);
 }
 
 export function readProject(id) {
