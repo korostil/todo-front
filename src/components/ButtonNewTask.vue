@@ -90,12 +90,14 @@ onMounted(() => {
             label="Due date"
             type="date"
             v-model="task.due_date"
+            variant="outlined"
           ></v-text-field>
 
           <v-text-field
             label="Due time"
             type="time"
             v-model="task.due_time"
+            variant="outlined"
           ></v-text-field>
 
           <v-select
@@ -104,6 +106,7 @@ onMounted(() => {
             :items="projects"
             item-title="title"
             item-value="id"
+            variant="outlined"
           ></v-select>
         </v-container>
 
