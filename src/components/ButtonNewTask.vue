@@ -65,20 +65,29 @@ onMounted(() => {
             v-model="task.title"
             variant="outlined"
           ></v-text-field>
+
           <v-text-field
             color="grey-darken-2"
             label="Description"
             v-model="task.description"
             variant="outlined"
           ></v-text-field>
-          <v-checkbox label="Decisive" v-model="task.decisive"></v-checkbox>
+
+          <v-switch
+            label="Decisive"
+            v-model="task.decisive"
+            color="secondary"
+            density="compact"
+          ></v-switch>
 
           <v-btn-toggle v-model="task.space" active-color="primary">
             <v-label> Space </v-label>
             <v-btn icon="mdi-account" value="2"></v-btn>
             <v-btn icon="mdi-domain" value="1"></v-btn>
           </v-btn-toggle>
+
           <!-- TODO due field -->
+
           <v-select
             label="Project"
             v-model="task.project_id"
