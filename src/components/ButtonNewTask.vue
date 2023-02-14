@@ -50,8 +50,8 @@ function doCreate() {
 
           <v-btn-toggle v-model="task.space" active-color="primary">
             <v-label> Space </v-label>
-            <v-btn icon="mdi-account"></v-btn>
-            <v-btn icon="mdi-domain"></v-btn>
+            <v-btn icon="mdi-account" value="2"></v-btn>
+            <v-btn icon="mdi-domain" value="1"></v-btn>
           </v-btn-toggle>
           <!-- TODO due field -->
           <!-- TODO project field -->

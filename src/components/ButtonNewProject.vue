@@ -54,8 +54,8 @@ function doCreate() {
             variant="outlined"
           ></v-text-field>
           <v-btn-toggle v-model="project.space" active-color="primary">
-            <v-btn icon="mdi-account"></v-btn>
-            <v-btn icon="mdi-domain"></v-btn>
+            <v-btn icon="mdi-account" value="2"></v-btn>
+            <v-btn icon="mdi-domain" value="1"></v-btn>
           </v-btn-toggle>
         </v-container>
 
