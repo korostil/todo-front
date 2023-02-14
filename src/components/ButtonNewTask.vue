@@ -86,7 +86,17 @@ onMounted(() => {
             <v-btn icon="mdi-domain" value="1"></v-btn>
           </v-btn-toggle>
 
-          <!-- TODO due field -->
+          <v-text-field
+            label="Due date"
+            type="date"
+            v-model="task.due_date"
+          ></v-text-field>
+
+          <v-text-field
+            label="Due time"
+            type="time"
+            v-model="task.due_time"
+          ></v-text-field>
 
           <v-select
             label="Project"
