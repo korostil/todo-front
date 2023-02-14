@@ -35,11 +35,13 @@ function doCreate() {
             color="grey-darken-2"
             label="Title"
             v-model="project.title"
+            variant="outlined"
           ></v-text-field>
           <v-text-field
             color="grey-darken-2"
             label="Description"
             v-model="project.description"
+            variant="outlined"
           ></v-text-field>
           <v-color-picker
             label="Color"
@@ -49,6 +51,7 @@ function doCreate() {
             color="grey-darken-2"
             label="Goal"
             v-model="project.goal_id"
+            variant="outlined"
           ></v-text-field>
           <v-btn-toggle v-model="project.space" active-color="primary">
             <v-btn icon="mdi-account"></v-btn>

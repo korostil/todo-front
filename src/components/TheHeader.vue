@@ -18,6 +18,7 @@ const router = useRouter();
       centered
       color="grey-darken-2"
       label="Search everywhere"
+      variant="outlined"
     ></v-text-field>
 
     <v-btn-toggle v-model="space_ref" active-color="primary" multiple>

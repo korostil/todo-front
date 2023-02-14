@@ -43,6 +43,7 @@ function doCreate() {
             color="grey-darken-2"
             label="Title"
             v-model="goal.title"
+            variant="outlined"
           ></v-text-field>
           <v-select
             label="Select"

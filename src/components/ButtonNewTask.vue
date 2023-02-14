@@ -38,11 +38,13 @@ function doCreate() {
             color="grey-darken-2"
             label="Title"
             v-model="task.title"
+            variant="outlined"
           ></v-text-field>
           <v-text-field
             color="grey-darken-2"
             label="Description"
             v-model="task.description"
+            variant="outlined"
           ></v-text-field>
           <v-checkbox label="Decisive" v-model="task.decisive"></v-checkbox>
 
