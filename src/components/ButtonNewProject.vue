@@ -1,17 +1,14 @@
 <script setup>
-import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { createProject } from "@/store/api/projects";
 
 const dialog = ref(false);
-const router = useRouter();
 const project = ref({});
 
 function doCreate() {
   return createProject(project.value)
-    .then((json) => {
+    .then(() => {
       dialog.value = false;
-      router.push({ name: "project", params: { project_id: json.data.id } });
     })
     .catch(() => {
       console.log("error");
