@@ -1,11 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
+import { readProjectList } from "@/store/api/projects";
+import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
 
 const dialog = ref(false);
 const router = useRouter();
 const task = ref({});
+const projects = ref(null),
+  loading_error = ref(null);
 
 function doCreate() {
   return createTask(task.value)
@@ -17,10 +21,31 @@ function doCreate() {
       console.log("error");
     });
 }
+
+function fetchProjects() {
+  const { data, error } = readProjectList({
+    archived: false,
+  });
+
+  watch(data, () => {
+    projects.value = data.value;
+  });
+  watch(error, () => {
+    loading_error.value = error.value;
+  });
+}
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <template>
-  <v-dialog v-model="dialog" max-width="30%" rounded="lg">
+  <snackbar-loading-failed
+    text="Failed to load project list. Please reload the page."
+    v-if="loading_error"
+  ></snackbar-loading-failed>
+  <v-dialog v-model="dialog" max-width="30%" rounded="lg" v-else>
     <template v-slot:activator="{ props }">
       <v-btn variant="plain" prepend-icon="mdi-plus" v-bind="props">
         new task
@@ -54,7 +79,13 @@ function doCreate() {
             <v-btn icon="mdi-domain" value="1"></v-btn>
           </v-btn-toggle>
           <!-- TODO due field -->
-          <!-- TODO project field -->
+          <v-select
+            label="Project"
+            v-model="task.project_id"
+            :items="projects"
+            item-title="title"
+            item-value="id"
+          ></v-select>
         </v-container>
 
         <v-card-actions>
