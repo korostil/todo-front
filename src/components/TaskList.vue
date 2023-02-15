@@ -4,6 +4,7 @@ import { ref, watch, watchEffect } from "vue";
 import { readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
 import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
+import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
 
 const props = defineProps({
   completed: { type: Boolean, required: false, default: null },
@@ -82,6 +83,7 @@ watchEffect(() => {
       rounded="lg"
       @click="true"
     >
+      <dialog-update-task :task="task"></dialog-update-task>
       <task-item :task="task"></task-item>
     </v-list-item>
   </v-list>

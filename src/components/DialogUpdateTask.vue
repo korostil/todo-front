@@ -1,61 +1,32 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { createTask } from "@/store/api/tasks";
-import { useRouter } from "vue-router";
-import { readProjectList } from "@/store/api/projects";
-import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
+import { ref } from "vue";
+import { updateTask } from "@/store/api/tasks";
 
+const emit = defineEmits(["taskUpdated"]);
+const props = defineProps({
+  task: Object,
+});
 const dialog = ref(false);
-const router = useRouter();
-const task = ref({});
-const projects = ref(null),
-  loading_error = ref(null);
+const task = ref(Object.assign({}, props.task));
 
-function doCreate() {
-  return createTask(task.value)
-    .then((json) => {
+function doUpdate() {
+  return updateTask(task.value.id, task.value)
+    .then(() => {
       dialog.value = false;
-      router.push({ name: "task", params: { task_id: json.data.id } });
+      emit("taskUpdated", task);
     })
     .catch(() => {
       console.log("error");
     });
 }
-
-function fetchProjects() {
-  const { data, error } = readProjectList({
-    archived: false,
-  });
-
-  watch(data, () => {
-    projects.value = data.value;
-  });
-  watch(error, () => {
-    loading_error.value = error.value;
-  });
-}
-
-onMounted(() => {
-  fetchProjects();
-});
 </script>
 
 <template>
-  <snackbar-loading-failed
-    text="Failed to load project list. Please reload the page."
-    v-if="loading_error"
-  ></snackbar-loading-failed>
-  <v-dialog v-model="dialog" max-width="30%" rounded="lg" v-else>
-    <template v-slot:activator="{ props }">
-      <v-btn variant="plain" prepend-icon="mdi-plus" v-bind="props">
-        new task
-      </v-btn>
-    </template>
-
+  <v-dialog v-model="dialog" max-width="30%" rounded="lg" activator="parent">
     <v-card>
       <v-container>
         <v-card-title>
-          <span class="text-h4">New task</span>
+          <span class="text-h4">Update task</span>
         </v-card-title>
 
         <v-container>
@@ -112,7 +83,7 @@ onMounted(() => {
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="doCreate"> Create </v-btn>
+          <v-btn color="primary" @click="doUpdate"> Save </v-btn>
         </v-card-actions>
       </v-container>
     </v-card>
