@@ -11,6 +11,13 @@ import FocusMonth from "@/components/FocusMonth.vue";
 import FocusYear from "@/components/FocusYear.vue";
 import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
 import ButtonAllGoals from "@/components/ButtonAllGoals.vue";
+import { ref } from "vue";
+
+const projectId = ref(null);
+
+function showProjectTasks(project_id) {
+  projectId.value = project_id;
+}
 </script>
 
 <template>
@@ -25,7 +32,10 @@ import ButtonAllGoals from "@/components/ButtonAllGoals.vue";
               <v-container>
                 <button-new-project></button-new-project>
                 <button-all-projects></button-all-projects>
-                <project-list :archived="false"></project-list>
+                <project-list
+                  :archived="false"
+                  @project-selected="showProjectTasks"
+                ></project-list>
               </v-container>
             </v-sheet>
           </v-col>
@@ -35,7 +45,10 @@ import ButtonAllGoals from "@/components/ButtonAllGoals.vue";
               <v-container>
                 <button-new-task></button-new-task>
                 <button-all-tasks></button-all-tasks>
-                <task-list :today="true"></task-list>
+                <task-list
+                  :today="projectId === null"
+                  :project_id="projectId"
+                ></task-list>
               </v-container>
             </v-sheet>
           </v-col>

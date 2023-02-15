@@ -23,6 +23,7 @@ export function readTaskList({
   decisive = null,
   due_from = null,
   due_to = null,
+  project_id = null,
   search = null,
   space = null,
 }) {
@@ -30,6 +31,9 @@ export function readTaskList({
   // TODO find a right way to check null value
   if (completed !== null && completed !== "null") {
     url.searchParams.set("completed", completed);
+  }
+  if (project_id !== null && project_id !== "null") {
+    url.searchParams.set("project_id", project_id);
   }
   if (search !== null && search !== "null") {
     url.searchParams.set("search", search);

@@ -32,7 +32,6 @@ export function readGoalList({
     url.searchParams.set("search", search);
   }
   if (month !== null && month !== "null") {
-    console.log(url);
     url.searchParams.set("month", month);
   }
   if (year !== null && year !== "null") {

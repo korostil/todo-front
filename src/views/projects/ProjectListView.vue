@@ -30,6 +30,7 @@ const refArchived = ref(null);
                     </v-btn-toggle>
                   </v-row>
                 </v-container>
+                <!-- TODO show all tasks view with predefined filter by project -->
                 <project-list :archived="refArchived"></project-list>
               </v-container>
             </v-sheet>

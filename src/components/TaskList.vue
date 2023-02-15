@@ -10,17 +10,19 @@ const props = defineProps({
   decisive: { type: Boolean, required: false, default: null },
   due_from: { type: Date, required: false, default: null },
   due_to: { type: Date, required: false, default: null },
-  today: { type: Boolean, required: false, default: false },
+  project_id: { type: Number, required: false, default: null },
   search: { type: String, required: false, default: null },
   space: { type: Number, required: false, default: null },
+  today: { type: Boolean, required: false, default: false },
 });
 const completed = ref(props.completed),
   decisive = ref(props.decisive),
   due_from = ref(props.due_from),
   due_to = ref(props.due_to),
-  today = ref(props.today),
+  project_id = ref(props.project_id),
   search = ref(props.search),
   space = ref(props.space),
+  today = ref(props.today),
   tasks = ref(null),
   loading_error = ref(null);
 
@@ -38,6 +40,7 @@ function fetchTasks() {
       decisive: decisive.value,
       due_from: due_from.value,
       due_to: due_to.value,
+      project_id: project_id.value,
       search: search.value,
       space: space.value,
     };
@@ -58,9 +61,10 @@ watchEffect(() => {
   decisive.value = props.decisive;
   due_from.value = props.due_from;
   due_to.value = props.due_to;
-  today.value = props.today;
+  project_id.value = props.project_id;
   search.value = props.search;
   space.value = props.space;
+  today.value = props.today;
   fetchTasks();
 });
 </script>
