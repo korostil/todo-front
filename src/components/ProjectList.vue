@@ -6,7 +6,6 @@ import {
   readProjectList,
   restoreProject,
 } from "@/store/api/projects";
-import { useRouter } from "vue-router";
 import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
@@ -17,12 +16,13 @@ const props = defineProps({
   archived: { type: Boolean, required: false, default: null },
   search: { type: String, required: false, default: null },
 });
+const emit = defineEmits(["projectSelected"]);
+
 const archived = ref(props.archived),
   search = ref(props.search),
   projects = ref(null),
   loading_error = ref(null);
 
-const router = useRouter();
 let dialog = ref(false);
 
 function fetchProjects() {
@@ -91,17 +91,15 @@ watchEffect(() => {
   ></snackbar-loading-failed>
   <v-list lines="two" v-else>
     <v-list-subheader>PROJECTS</v-list-subheader>
-    <!-- TODO how to make v-list-item selectable and change task list from different component? -->
     <v-list-item
       v-for="project in projects"
       :key="project.id"
       :title="project.title"
       :subtitle="project.description"
-      active-color="primary"
+      :value="project.id"
+      @click="emit('projectSelected', project.id)"
+      active-color="secondary"
       rounded="lg"
-      @click="
-        router.push({ name: 'project', params: { project_id: project.id } })
-      "
     >
       <template v-slot:prepend>
         <v-icon
