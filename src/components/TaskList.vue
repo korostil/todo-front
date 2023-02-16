@@ -4,7 +4,6 @@ import { ref, watch, watchEffect } from "vue";
 import { readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
 import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
-import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
 
 const props = defineProps({
   completed: { type: Boolean, required: false, default: null },
@@ -68,6 +67,24 @@ watchEffect(() => {
   today.value = props.today;
   fetchTasks();
 });
+
+function doComplete(task_id) {
+  function removeValue(value, index, arr) {
+    if (value.id === task_id) {
+      arr.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+
+  if (today.value === true || completed.value === false) {
+    // TODO optimization: there is a way to make it neat and tidy?
+    tasks.value.filter(removeValue);
+  } else {
+    const findTaskIndex = (element) => element.id === task_id;
+    tasks.value[tasks.value.findIndex(findTaskIndex)].completed = true;
+  }
+}
 </script>
 
 <template>
@@ -83,8 +100,7 @@ watchEffect(() => {
       rounded="lg"
       @click="true"
     >
-      <dialog-update-task :task="task"></dialog-update-task>
-      <task-item :task="task"></task-item>
+      <task-item :task="task" @task-completed="doComplete"></task-item>
     </v-list-item>
   </v-list>
 </template>

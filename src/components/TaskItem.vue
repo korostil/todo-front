@@ -1,7 +1,18 @@
 <script setup>
 import { getFormattedDueDateTime } from "@/store/services/utils/dates";
+import { completeTask } from "@/store/api/tasks";
+import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
+import { ref } from "vue";
 
 const props = defineProps({ task: Object });
+const emit = defineEmits(["taskCompleted"]);
+const refTaskIsCompleted = ref(props.task.is_completed);
+
+function doComplete() {
+  completeTask(props.task.id);
+  refTaskIsCompleted.value = true;
+  emit("taskCompleted", props.task.id);
+}
 </script>
 
 <template>
@@ -10,11 +21,13 @@ const props = defineProps({ task: Object });
       <v-btn
         size="small"
         variant="outlined"
-        :icon="props.task.is_completed ? 'mdi-check' : ''"
+        :icon="refTaskIsCompleted ? 'mdi-check' : ''"
         color="grey"
+        @click="doComplete"
       ></v-btn>
     </v-col>
     <v-col cols="12" sm="11">
+      <dialog-update-task :task="task"></dialog-update-task>
       <div>
         <span class="text-h5">{{ props.task.title }}</span>
       </div>
