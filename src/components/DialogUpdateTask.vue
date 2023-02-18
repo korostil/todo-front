@@ -78,6 +78,7 @@ onMounted(() => {
               variant="outlined"
               :rules="titleRules"
               required
+              autofocus
             ></v-text-field>
 
             <v-text-field
