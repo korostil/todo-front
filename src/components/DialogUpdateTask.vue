@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import {onMounted, ref, watch} from "vue";
 import { updateTask } from "@/store/api/tasks";
+import {readProjectList} from "@/store/api/projects";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -8,6 +9,8 @@ const props = defineProps({
 });
 const dialog = ref(false);
 const task = ref(Object.assign({}, props.task));
+const projects = ref(null),
+  loading_error = ref(null);
 
 function doUpdate() {
   return updateTask(task.value.id, task.value)
@@ -19,6 +22,23 @@ function doUpdate() {
       console.log("error");
     });
 }
+
+function fetchProjects() {
+  const { data, error } = readProjectList({
+    archived: false,
+  });
+
+  watch(data, () => {
+    projects.value = data.value;
+  });
+  watch(error, () => {
+    loading_error.value = error.value;
+  });
+}
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <template>
