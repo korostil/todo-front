@@ -29,6 +29,11 @@ const titleRules = [
 ];
 
 function doCreate() {
+  let project = projects.value.find(
+    (project) => project.id === task.value.project_id
+  );
+  if (project) task.value.space = project.space;
+
   return createTask(task.value)
     .then((json) => {
       dialog.value = false;
@@ -100,12 +105,6 @@ onMounted(() => {
               density="compact"
             ></v-switch>
 
-            <v-btn-toggle v-model="task.space" active-color="primary" mandatory>
-              <v-label> Space </v-label>
-              <v-btn icon="mdi-account" :value="2"></v-btn>
-              <v-btn icon="mdi-domain" :value="1"></v-btn>
-            </v-btn-toggle>
-
             <v-text-field
               label="Due date"
               type="date"
@@ -129,6 +128,17 @@ onMounted(() => {
               variant="outlined"
               clearable
             ></v-select>
+
+            <v-btn-toggle
+              v-model="task.space"
+              active-color="primary"
+              mandatory
+              v-if="!task.project_id"
+            >
+              <v-label> Space </v-label>
+              <v-btn icon="mdi-account" :value="2"></v-btn>
+              <v-btn icon="mdi-domain" :value="1"></v-btn>
+            </v-btn-toggle>
           </v-container>
 
           <v-card-actions>
