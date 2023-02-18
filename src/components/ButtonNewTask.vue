@@ -107,6 +107,7 @@ onMounted(() => {
             item-title="title"
             item-value="id"
             variant="outlined"
+            clearable
           ></v-select>
         </v-container>
 
