@@ -5,11 +5,28 @@ import { useRouter } from "vue-router";
 import { readProjectList } from "@/store/api/projects";
 import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
 
-const dialog = ref(false);
+const dialog = ref(false),
+  valid = ref(false);
 const router = useRouter();
-const task = ref({});
+const task = ref({
+  space: 2,
+});
 const projects = ref(null),
   loading_error = ref(null);
+
+// TODO where to move boilerplate code?
+const titleRules = [
+  (value) => {
+    if (value) return true;
+
+    return "Title is required.";
+  },
+  (value) => {
+    if (value?.length <= 50) return true;
+
+    return "Title must be less than 50 characters.";
+  },
+];
 
 function doCreate() {
   return createTask(task.value)
@@ -58,63 +75,67 @@ onMounted(() => {
           <span class="text-h4">New task</span>
         </v-card-title>
 
-        <v-container>
-          <v-text-field
-            color="grey-darken-2"
-            label="Title"
-            v-model="task.title"
-            variant="outlined"
-          ></v-text-field>
+        <v-form v-model="valid">
+          <v-container>
+            <v-text-field
+              color="grey-darken-2"
+              label="Title"
+              v-model="task.title"
+              variant="outlined"
+              :rules="titleRules"
+              required
+            ></v-text-field>
 
-          <v-text-field
-            color="grey-darken-2"
-            label="Description"
-            v-model="task.description"
-            variant="outlined"
-          ></v-text-field>
+            <v-text-field
+              color="grey-darken-2"
+              label="Description"
+              v-model="task.description"
+              variant="outlined"
+            ></v-text-field>
 
-          <v-switch
-            label="Decisive"
-            v-model="task.decisive"
-            color="secondary"
-            density="compact"
-          ></v-switch>
+            <v-switch
+              label="Decisive"
+              v-model="task.decisive"
+              color="secondary"
+              density="compact"
+            ></v-switch>
 
-          <v-btn-toggle v-model="task.space" active-color="primary">
-            <v-label> Space </v-label>
-            <v-btn icon="mdi-account" :value="2"></v-btn>
-            <v-btn icon="mdi-domain" :value="1"></v-btn>
-          </v-btn-toggle>
+            <v-btn-toggle v-model="task.space" active-color="primary" mandatory>
+              <v-label> Space </v-label>
+              <v-btn icon="mdi-account" :value="2"></v-btn>
+              <v-btn icon="mdi-domain" :value="1"></v-btn>
+            </v-btn-toggle>
 
-          <v-text-field
-            label="Due date"
-            type="date"
-            v-model="task.due_date"
-            variant="outlined"
-          ></v-text-field>
+            <v-text-field
+              label="Due date"
+              type="date"
+              v-model="task.due_date"
+              variant="outlined"
+            ></v-text-field>
 
-          <v-text-field
-            label="Due time"
-            type="time"
-            v-model="task.due_time"
-            variant="outlined"
-          ></v-text-field>
+            <v-text-field
+              label="Due time"
+              type="time"
+              v-model="task.due_time"
+              variant="outlined"
+            ></v-text-field>
 
-          <v-select
-            label="Project"
-            v-model="task.project_id"
-            :items="projects"
-            item-title="title"
-            item-value="id"
-            variant="outlined"
-            clearable
-          ></v-select>
-        </v-container>
+            <v-select
+              label="Project"
+              v-model="task.project_id"
+              :items="projects"
+              item-title="title"
+              item-value="id"
+              variant="outlined"
+              clearable
+            ></v-select>
+          </v-container>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="doCreate"> Create </v-btn>
-        </v-card-actions>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click="doCreate"> Create </v-btn>
+          </v-card-actions>
+        </v-form>
       </v-container>
     </v-card>
   </v-dialog>
