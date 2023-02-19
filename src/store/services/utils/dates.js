@@ -41,25 +41,23 @@ export function getStartOfTheDay(date) {
   return _date;
 }
 
-export function getFormattedDueDateTime(due) {
-  if (due !== null) {
-    due = new Date(due);
-    let result = due.getDate() + " " + monthShortNames[due.getMonth()],
-      hours = due.getHours(),
-      minutes = due.getMinutes(),
-      year = due.getFullYear();
+export function getFormattedDueDateTime(due_date, due_time) {
+  let result = null;
 
-    if (new Date().getFullYear() !== year) {
-      result += " " + due.getFullYear();
-    }
+  if (due_date !== null) {
+    due_date = new Date(due_date);
+    result = due_date.getDate() + " " + monthShortNames[due_date.getMonth()];
+    let year = due_date.getFullYear();
 
-    if (hours !== 23 && minutes !== 59) {
-      if (hours < 10) hours = "0" + hours;
-      if (minutes < 10) minutes = "0" + minutes;
-      result += " " + hours + ":" + minutes;
-    }
-
-    return result;
+    if (new Date().getFullYear() !== year)
+      result += " " + due_date.getFullYear();
   }
-  return null;
+
+  if (due_time !== null) {
+    due_time = due_time.slice(0, -3);
+    if (result) result += " " + due_time;
+    else result = due_time;
+  }
+
+  return result;
 }

@@ -37,7 +37,9 @@ function doComplete() {
       <v-row>
         <v-col cols="12" sm="8">
           <v-chip class="ml-0 pl-0 task-due" size="small" variant="text">
-            {{ getFormattedDueDateTime(props.task.due) }}
+            {{
+              getFormattedDueDateTime(props.task.due_date, props.task.due_time)
+            }}
           </v-chip>
           <v-chip class="my-2 mx-1" color="#a6e22e" size="small" label>
             some

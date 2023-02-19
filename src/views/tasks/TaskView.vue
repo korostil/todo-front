@@ -104,7 +104,10 @@ onMounted(() => {
         <strong>Space: {{ task.space }}</strong>
       </div>
       <div>
-        <strong>Due: {{ task.due }}</strong>
+        <strong>Due date: {{ task.due_date }}</strong>
+      </div>
+      <div>
+        <strong>Due time: {{ task.due_time }}</strong>
       </div>
       <div v-if="!loading_project && project">
         <strong>Project: {{ project.title }}</strong>
