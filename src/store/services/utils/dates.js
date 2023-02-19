@@ -35,6 +35,12 @@ export function toUnixDate(date) {
   return null;
 }
 
+export function getStartOfTheDay(date) {
+  let _date = new Date(date);
+  _date.setHours(Math.abs(date.getTimezoneOffset()) / 60, 0, 0, 0);
+  return _date;
+}
+
 export function getFormattedDueDateTime(due) {
   if (due !== null) {
     due = new Date(due);

@@ -4,6 +4,7 @@ import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
 import { readProjectList } from "@/store/api/projects";
 import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
+import { getStartOfTheDay } from "@/store/services/utils/dates";
 
 const dialog = ref(false),
   valid = ref(false);
@@ -25,6 +26,13 @@ const titleRules = [
     if (value?.length <= 50) return true;
 
     return "Title must be less than 50 characters.";
+  },
+];
+const dueDateRules = [
+  (value) => {
+    if (new Date(value) >= getStartOfTheDay(new Date())) return true;
+
+    return "Date must be greater than today";
   },
 ];
 
@@ -111,6 +119,7 @@ onMounted(() => {
               type="date"
               v-model="task.due_date"
               variant="outlined"
+              :rules="dueDateRules"
             ></v-text-field>
 
             <v-text-field

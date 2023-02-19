@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import { updateTask } from "@/store/api/tasks";
 import { readProjectList } from "@/store/api/projects";
+import { getStartOfTheDay } from "@/store/services/utils/dates";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -24,6 +25,13 @@ const titleRules = [
     if (value?.length <= 50) return true;
 
     return "Title must be less than 50 characters.";
+  },
+];
+const dueDateRules = [
+  (value) => {
+    if (new Date(value) >= getStartOfTheDay(new Date())) return true;
+
+    return "Date must be greater than today";
   },
 ];
 
@@ -100,6 +108,7 @@ onMounted(() => {
               type="date"
               v-model="task.due_date"
               variant="outlined"
+              :rules="dueDateRules"
             ></v-text-field>
 
             <v-text-field
