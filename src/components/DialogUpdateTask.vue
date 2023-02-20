@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { updateTask } from "@/store/api/tasks";
+import { deleteTask, updateTask } from "@/store/api/tasks";
 import { readProjectList } from "@/store/api/projects";
 import { getStartOfTheDay } from "@/store/services/utils/dates";
+import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -45,6 +46,16 @@ function doUpdate() {
     .then(() => {
       dialog.value = false;
       emit("taskUpdated", task);
+    })
+    .catch(() => {
+      console.log("error");
+    });
+}
+
+function doDelete(task_id) {
+  deleteTask(task_id)
+    .then(() => {
+      dialog.value = false;
     })
     .catch(() => {
       console.log("error");
@@ -142,6 +153,10 @@ onMounted(() => {
 
           <v-card-actions>
             <v-spacer></v-spacer>
+            <button-remove-task
+              :task="task"
+              @task-removed="doDelete"
+            ></button-remove-task>
             <v-btn color="primary" @click="doUpdate"> Save </v-btn>
           </v-card-actions>
         </v-form>
