@@ -23,9 +23,9 @@ const titleRules = [
     return "Title is required.";
   },
   (value) => {
-    if (value?.length <= 50) return true;
+    if (value?.length <= 128) return true;
 
-    return "Title must be less than 50 characters.";
+    return "Title must be less than 128 characters.";
   },
 ];
 const dueDateRules = [
