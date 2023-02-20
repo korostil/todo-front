@@ -8,18 +8,18 @@ import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
 const props = defineProps({
   completed: { type: Boolean, required: false, default: null },
   decisive: { type: Boolean, required: false, default: null },
-  due_from: { type: Date, required: false, default: null },
-  due_to: { type: Date, required: false, default: null },
-  project_id: { type: Number, required: false, default: null },
+  dueFrom: { type: Date, required: false, default: null },
+  dueTo: { type: Date, required: false, default: null },
+  projectId: { type: Number, required: false, default: null },
   search: { type: String, required: false, default: null },
   space: { type: Number, required: false, default: null },
   today: { type: Boolean, required: false, default: false },
 });
 const completed = ref(props.completed),
   decisive = ref(props.decisive),
-  due_from = ref(props.due_from),
-  due_to = ref(props.due_to),
-  project_id = ref(props.project_id),
+  due_from = ref(props.dueFrom),
+  due_to = ref(props.dueTo),
+  project_id = ref(props.projectId),
   search = ref(props.search),
   space = ref(props.space),
   today = ref(props.today),
@@ -59,9 +59,9 @@ function fetchTasks() {
 watchEffect(() => {
   completed.value = props.completed;
   decisive.value = props.decisive;
-  due_from.value = props.due_from;
-  due_to.value = props.due_to;
-  project_id.value = props.project_id;
+  due_from.value = props.dueFrom;
+  due_to.value = props.dueTo;
+  project_id.value = props.projectId;
   search.value = props.search;
   space.value = props.space;
   today.value = props.today;
