@@ -2,8 +2,8 @@
 import { onMounted, ref, watch } from "vue";
 import { deleteTask, updateTask } from "@/store/api/tasks";
 import { readProjectList } from "@/store/api/projects";
-import { getStartOfTheDay } from "@/store/services/utils/dates";
 import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
+import { taskDueDateRules, taskTitleRules } from "@/store/services/rules";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -14,27 +14,6 @@ const dialog = ref(false),
 const task = ref(Object.assign({}, props.task));
 const projects = ref(null),
   loading_error = ref(null);
-
-// TODO where to move boilerplate code?
-const titleRules = [
-  (value) => {
-    if (value) return true;
-
-    return "Title is required.";
-  },
-  (value) => {
-    if (value?.length <= 128) return true;
-
-    return "Title must be less than 128 characters.";
-  },
-];
-const dueDateRules = [
-  (value) => {
-    if (new Date(value) >= getStartOfTheDay(new Date())) return true;
-
-    return "Date must be greater than today";
-  },
-];
 
 function doUpdate() {
   let project = projects.value.find(
@@ -95,7 +74,7 @@ onMounted(() => {
               label="Title"
               v-model="task.title"
               variant="outlined"
-              :rules="titleRules"
+              :rules="taskTitleRules"
               required
               autofocus
             ></v-text-field>
@@ -119,7 +98,7 @@ onMounted(() => {
               type="date"
               v-model="task.due_date"
               variant="outlined"
-              :rules="dueDateRules"
+              :rules="taskDueDateRules"
             ></v-text-field>
 
             <v-text-field

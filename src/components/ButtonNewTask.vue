@@ -4,7 +4,7 @@ import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
 import { readProjectList } from "@/store/api/projects";
 import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
-import { getStartOfTheDay } from "@/store/services/utils/dates";
+import { taskDueDateRules, taskTitleRules } from "@/store/services/rules";
 
 const dialog = ref(false),
   valid = ref(false);
@@ -14,27 +14,6 @@ const task = ref({
 });
 const projects = ref(null),
   loading_error = ref(null);
-
-// TODO where to move boilerplate code?
-const titleRules = [
-  (value) => {
-    if (value) return true;
-
-    return "Title is required.";
-  },
-  (value) => {
-    if (value?.length <= 128) return true;
-
-    return "Title must be less than 128 characters.";
-  },
-];
-const dueDateRules = [
-  (value) => {
-    if (new Date(value) >= getStartOfTheDay(new Date())) return true;
-
-    return "Date must be greater than today";
-  },
-];
 
 function doCreate() {
   let project = projects.value.find(
@@ -95,7 +74,7 @@ onMounted(() => {
               label="Title"
               v-model="task.title"
               variant="outlined"
-              :rules="titleRules"
+              :rules="taskTitleRules"
               required
               autofocus
             ></v-text-field>
@@ -119,7 +98,7 @@ onMounted(() => {
               type="date"
               v-model="task.due_date"
               variant="outlined"
-              :rules="dueDateRules"
+              :rules="taskDueDateRules"
             ></v-text-field>
 
             <v-text-field
