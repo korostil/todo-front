@@ -65,7 +65,7 @@ onMounted(() => {
                 </v-container>
                 <task-list
                   :completed="refCompleted"
-                  :project_id="refProjectId"
+                  :projectId="refProjectId"
                 ></task-list>
               </v-container>
             </v-sheet>
