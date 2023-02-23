@@ -1,9 +1,15 @@
 import { todoAPIHeaders, todoAPIUrl, useFetch } from "@/store/api/base";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/projects/");
 
 export const projects = ref([]);
+export const active_projects = computed(() =>
+  projects.value.filter((project) => !project.is_archived)
+);
+export const archived_projects = computed(() =>
+  projects.value.filter((project) => project.is_archived)
+);
 
 export function createProject(body) {
   return fetch(entity_url, {

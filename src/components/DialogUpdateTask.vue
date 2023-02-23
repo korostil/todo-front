@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { ref } from "vue";
 import { deleteTask, updateTask } from "@/store/api/tasks";
-import { readProjectList } from "@/store/api/projects";
+import { findProjectIndex, active_projects } from "@/store/api/projects";
 import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
 import { taskDueDateRules, taskTitleRules } from "@/store/services/rules";
 
@@ -12,13 +12,10 @@ const props = defineProps({
 const dialog = ref(false),
   valid = ref(false);
 const task = ref(Object.assign({}, props.task));
-const projects = ref(null),
-  loading_error = ref(null);
 
 function doUpdate() {
-  let project = projects.value.find(
-    (project) => project.id === task.value.project_id
-  );
+  const project =
+    active_projects.value[findProjectIndex(task.value.project_id)];
   if (project) task.value.space = project.space;
 
   return updateTask(task.value.id, task.value)
@@ -40,23 +37,6 @@ function doDelete(task_id) {
       console.log("error");
     });
 }
-
-function fetchProjects() {
-  const { data, error } = readProjectList({
-    archived: false,
-  });
-
-  watch(data, () => {
-    projects.value = data.value;
-  });
-  watch(error, () => {
-    loading_error.value = error.value;
-  });
-}
-
-onMounted(() => {
-  fetchProjects();
-});
 </script>
 
 <template>
@@ -111,7 +91,7 @@ onMounted(() => {
             <v-select
               label="Project"
               v-model="task.project_id"
-              :items="projects"
+              :items="active_projects"
               item-title="title"
               item-value="id"
               variant="outlined"

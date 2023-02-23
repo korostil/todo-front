@@ -1,9 +1,8 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { ref } from "vue";
 import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
-import { readProjectList } from "@/store/api/projects";
-import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
+import { active_projects, findProjectIndex } from "@/store/api/projects";
 import { taskDueDateRules, taskTitleRules } from "@/store/services/rules";
 
 const dialog = ref(false),
@@ -12,13 +11,10 @@ const router = useRouter();
 const task = ref({
   space: 2,
 });
-const projects = ref(null),
-  loading_error = ref(null);
 
 function doCreate() {
-  let project = projects.value.find(
-    (project) => project.id === task.value.project_id
-  );
+  const project =
+    active_projects.value[findProjectIndex(task.value.project_id)];
   if (project) task.value.space = project.space;
 
   return createTask(task.value)
@@ -30,31 +26,10 @@ function doCreate() {
       console.log("error");
     });
 }
-
-function fetchProjects() {
-  const { data, error } = readProjectList({
-    archived: false,
-  });
-
-  watch(data, () => {
-    projects.value = data.value;
-  });
-  watch(error, () => {
-    loading_error.value = error.value;
-  });
-}
-
-onMounted(() => {
-  fetchProjects();
-});
 </script>
 
 <template>
-  <snackbar-loading-failed
-    text="Failed to load project list. Please reload the page."
-    v-if="loading_error"
-  ></snackbar-loading-failed>
-  <v-dialog v-model="dialog" max-width="30%" rounded="lg" v-else>
+  <v-dialog v-model="dialog" max-width="30%" rounded="lg">
     <template v-slot:activator="{ props }">
       <v-btn variant="plain" prepend-icon="mdi-plus" v-bind="props">
         new task
@@ -111,7 +86,7 @@ onMounted(() => {
             <v-select
               label="Project"
               v-model="task.project_id"
-              :items="projects"
+              :items="active_projects"
               item-title="title"
               item-value="id"
               variant="outlined"
