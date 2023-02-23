@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import { deleteProject } from "@/store/api/projects";
 
-const emit = defineEmits(["projectRemoved"]);
 const props = defineProps({
   project: Object,
 });
 const dialog = ref(false);
 
 function onRemoveClick() {
-  emit("projectRemoved", props.project.id);
+  deleteProject(props.project.id);
   dialog.value = false;
 }
 </script>

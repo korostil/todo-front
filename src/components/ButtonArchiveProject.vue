@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import { archiveProject } from "@/store/api/projects";
 
-const emit = defineEmits(["projectArchived"]);
 const props = defineProps({
   project: Object,
 });
 const dialog = ref(false);
 
 function onArchiveClick() {
-  emit("projectArchived", props.project.id);
+  archiveProject(props.project.id);
   dialog.value = false;
 }
 </script>

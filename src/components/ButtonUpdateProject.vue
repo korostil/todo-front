@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { updateProject } from "@/store/api/projects";
 
-const emit = defineEmits(["projectUpdated"]);
 const props = defineProps({
   project: Object,
 });
@@ -13,7 +12,6 @@ function doUpdate() {
   return updateProject(project.value.id, project.value)
     .then(() => {
       dialog.value = false;
-      emit("projectUpdated", project);
     })
     .catch(() => {
       console.log("error");

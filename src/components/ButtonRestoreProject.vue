@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import { restoreProject } from "@/store/api/projects";
 
-const emit = defineEmits(["projectRestored"]);
 const props = defineProps({
   project: Object,
 });
 const dialog = ref(false);
 
 function onRestoreClick() {
-  emit("projectRestored", props.project.id);
+  restoreProject(props.project.id);
   dialog.value = false;
 }
 </script>
