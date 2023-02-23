@@ -67,7 +67,7 @@ onMounted(() => {
           <span class="text-h4">New task</span>
         </v-card-title>
 
-        <v-form v-model="valid">
+        <v-form v-model="valid" @submit.prevent="doCreate">
           <v-container>
             <v-text-field
               color="grey-darken-2"
@@ -132,7 +132,7 @@ onMounted(() => {
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="doCreate"> Create </v-btn>
+            <v-btn color="primary" type="submit"> Create </v-btn>
           </v-card-actions>
         </v-form>
       </v-container>

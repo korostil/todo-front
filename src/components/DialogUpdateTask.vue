@@ -67,7 +67,7 @@ onMounted(() => {
           <span class="text-h4">Update task</span>
         </v-card-title>
 
-        <v-form v-model="valid">
+        <v-form v-model="valid" @submit.prevent="doUpdate">
           <v-container>
             <v-text-field
               color="grey-darken-2"
@@ -136,7 +136,7 @@ onMounted(() => {
               :task="task"
               @task-removed="doDelete"
             ></button-remove-task>
-            <v-btn color="primary" @click="doUpdate"> Save </v-btn>
+            <v-btn color="primary" type="submit"> Save </v-btn>
           </v-card-actions>
         </v-form>
       </v-container>
