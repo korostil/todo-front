@@ -63,7 +63,7 @@ export function updateProject(id, body) {
       return response.json();
     })
     .then((json) => {
-      projects.value.splice(findIndex(id), 1, json.data);
+      projects.value.splice(findProjectIndex(id), 1, json.data);
       return json;
     });
 }
@@ -82,7 +82,7 @@ export function archiveProject(id) {
       return response.json();
     })
     .then((json) => {
-      projects.value.splice(findIndex(id), 1, json.data);
+      projects.value.splice(findProjectIndex(id), 1, json.data);
       return json;
     });
 }
@@ -101,7 +101,7 @@ export function restoreProject(id) {
       return response.json();
     })
     .then((json) => {
-      projects.value.splice(findIndex(id), 1, json.data);
+      projects.value.splice(findProjectIndex(id), 1, json.data);
       return json;
     });
 }
@@ -119,11 +119,11 @@ export function deleteProject(id) {
       }
     })
     .then((json) => {
-      projects.value.splice(findIndex(id), 1);
+      projects.value.splice(findProjectIndex(id), 1);
       return json;
     });
 }
 
-function findIndex(projectId) {
+export function findProjectIndex(projectId) {
   return projects.value.findIndex((project) => project.id === projectId);
 }

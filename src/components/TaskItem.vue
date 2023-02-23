@@ -3,10 +3,12 @@ import { getFormattedDueDateTime } from "@/store/services/utils/dates";
 import { completeTask } from "@/store/api/tasks";
 import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
 import { ref } from "vue";
+import { findProjectIndex, projects } from "@/store/api/projects";
 
 const props = defineProps({ task: Object });
 const emit = defineEmits(["taskCompleted"]);
 const refTaskIsCompleted = ref(props.task.is_completed);
+const project = projects.value[findProjectIndex(props.task.project_id)];
 
 function doComplete() {
   completeTask(props.task.id);
@@ -52,8 +54,13 @@ function doComplete() {
           </v-chip>
         </v-col>
         <v-col cols="12" sm="4" class="d-flex justify-end">
-          <v-chip class="ma-2" color="green" size="small" variant="text">
-            Project name
+          <v-chip
+            class="ma-2"
+            :color="project ? project.color : ''"
+            size="small"
+            variant="text"
+          >
+            {{ project ? project.title : "" }}
           </v-chip>
         </v-col>
       </v-row>
