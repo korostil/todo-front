@@ -7,9 +7,6 @@ export const projects = ref([]);
 export const active_projects = computed(() =>
   projects.value.filter((project) => !project.is_archived)
 );
-export const archived_projects = computed(() =>
-  projects.value.filter((project) => project.is_archived)
-);
 
 export function createProject(body) {
   return fetch(entity_url, {
