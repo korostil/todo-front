@@ -23,6 +23,7 @@ export function readTaskList({
   decisive = null,
   due_from = null,
   due_to = null,
+  inbox = null,
   project_id = null,
   search = null,
   space = null,
@@ -49,6 +50,9 @@ export function readTaskList({
   }
   if (due_to !== null && due_to !== "null") {
     url.searchParams.set("due_to", due_to);
+  }
+  if (inbox !== null && inbox !== "null") {
+    url.searchParams.set("inbox", "true");
   }
 
   return useFetch(url);

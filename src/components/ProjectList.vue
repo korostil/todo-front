@@ -6,6 +6,7 @@ import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
 import ButtonRestoreProject from "@/components/ButtonRestoreProject.vue";
 import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
+import { INBOX_PROJECT_ID } from "@/store/services/constants";
 
 const props = defineProps({
   archived: { type: Boolean, required: false, default: null },
@@ -44,9 +45,19 @@ watchEffect(() => {
     text="Failed to load project list. Please reload the page."
     v-if="loading_error"
   ></snackbar-with-timeout>
-  <v-list lines="two" v-else>
+  <v-list v-else>
+    <v-list-item
+      lines="one"
+      title="Inbox"
+      :value="INBOX_PROJECT_ID"
+      active-color="secondary"
+      rounded="lg"
+      prepend-icon="mdi-inbox"
+      @click="emit('projectSelected', INBOX_PROJECT_ID)"
+    ></v-list-item>
     <v-list-subheader>PROJECTS</v-list-subheader>
     <v-list-item
+      lines="two"
       v-for="project in filteredProjects"
       :key="project.id"
       :title="project.title"

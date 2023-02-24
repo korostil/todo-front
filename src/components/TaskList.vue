@@ -4,6 +4,7 @@ import { ref, watch, watchEffect } from "vue";
 import { readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
 import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
+import { INBOX_PROJECT_ID } from "@/store/services/constants";
 
 const props = defineProps({
   completed: { type: Boolean, required: false, default: null },
@@ -29,8 +30,18 @@ const completed = ref(props.completed),
 
 function fetchTasks() {
   let filter;
-
-  if (today.value === true) {
+  console.log(project_id.value, project_id.value === INBOX_PROJECT_ID);
+  if (project_id.value === INBOX_PROJECT_ID) {
+    filter = {
+      completed: completed.value,
+      decisive: decisive.value,
+      due_from: due_from.value,
+      due_to: due_to.value,
+      inbox: true,
+      search: search.value,
+      space: space.value,
+    };
+  } else if (today.value === true) {
     filter = {
       completed: false,
       due_to: toUnixDate(new Date()),
@@ -98,8 +109,9 @@ function doComplete(task_id) {
     text="Failed to load task list. Please reload the page."
     v-if="loading_error"
   ></snackbar-with-timeout>
-  <v-list lines="two" v-else>
+  <v-list v-else>
     <v-list-item
+      lines="two"
       v-for="task in tasks"
       :key="task.id"
       active-color="primary"
