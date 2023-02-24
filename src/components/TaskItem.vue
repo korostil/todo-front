@@ -2,7 +2,7 @@
 import { getFormattedDueDateTime } from "@/store/services/utils/dates";
 import { completeTask } from "@/store/api/tasks";
 import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { projects } from "@/store/api/projects";
 import { findEntityIndexById } from "@/store/services/utils/entities";
 
@@ -17,6 +17,10 @@ function doComplete() {
   refTaskIsCompleted.value = true;
   emit("taskCompleted", props.task.id);
 }
+
+const due_datetime = computed(() => {
+  return getFormattedDueDateTime(props.task.due_date, props.task.due_time);
+});
 </script>
 
 <template>
@@ -40,10 +44,13 @@ function doComplete() {
       </div>
       <v-row>
         <v-col cols="12" sm="8">
-          <v-chip class="ml-0 pl-0 task-due" size="small" variant="text">
-            {{
-              getFormattedDueDateTime(props.task.due_date, props.task.due_time)
-            }}
+          <v-chip
+            class="ml-0 pl-0 task-due"
+            size="small"
+            variant="text"
+            v-if="due_datetime"
+          >
+            {{ due_datetime }}
           </v-chip>
           <v-chip class="my-2 mx-1" color="#a6e22e" size="small" label>
             some
