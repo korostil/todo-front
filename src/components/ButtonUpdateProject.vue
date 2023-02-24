@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { updateProject } from "@/store/api/projects";
+import { descriptionRules, titleRules } from "@/store/services/rules";
 
 const props = defineProps({
   project: Object,
 });
-const dialog = ref(false);
+const dialog = ref(false),
+  valid = ref(false);
 const project = ref(Object.assign({}, props.project));
 
 function doUpdate() {
@@ -33,39 +35,47 @@ function doUpdate() {
           <span class="text-h4">Update project</span>
         </v-card-title>
 
-        <v-container>
-          <v-text-field
-            color="grey-darken-2"
-            label="Title"
-            v-model="project.title"
-            variant="outlined"
-          ></v-text-field>
-          <v-text-field
-            color="grey-darken-2"
-            label="Description"
-            v-model="project.description"
-            variant="outlined"
-          ></v-text-field>
-          <v-color-picker
-            label="Color"
-            v-model="project.color"
-          ></v-color-picker>
-          <v-text-field
-            color="grey-darken-2"
-            label="Goal"
-            v-model="project.goal_id"
-            variant="outlined"
-          ></v-text-field>
-          <v-btn-toggle v-model="project.space" active-color="primary">
-            <v-btn icon="mdi-account" :value="2"></v-btn>
-            <v-btn icon="mdi-domain" :value="1"></v-btn>
-          </v-btn-toggle>
-        </v-container>
+        <v-form v-model="valid" @submit.prevent="doUpdate">
+          <v-container>
+            <v-text-field
+              color="grey-darken-2"
+              label="Title"
+              v-model="project.title"
+              variant="outlined"
+              :rules="titleRules"
+            ></v-text-field>
+            <v-text-field
+              color="grey-darken-2"
+              label="Description"
+              v-model="project.description"
+              variant="outlined"
+              :rules="descriptionRules"
+            ></v-text-field>
+            <v-color-picker
+              label="Color"
+              v-model="project.color"
+            ></v-color-picker>
+            <v-text-field
+              color="grey-darken-2"
+              label="Goal"
+              v-model="project.goal_id"
+              variant="outlined"
+            ></v-text-field>
+            <v-btn-toggle
+              v-model="project.space"
+              active-color="primary"
+              mandatory
+            >
+              <v-btn icon="mdi-account" :value="2"></v-btn>
+              <v-btn icon="mdi-domain" :value="1"></v-btn>
+            </v-btn-toggle>
+          </v-container>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="doUpdate"> Save </v-btn>
-        </v-card-actions>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" type="submit"> Save </v-btn>
+          </v-card-actions>
+        </v-form>
       </v-container>
     </v-card>
   </v-dialog>

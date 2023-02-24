@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
 import { active_projects, findProjectIndex } from "@/store/api/projects";
-import { taskDueDateRules, taskTitleRules } from "@/store/services/rules";
+import { taskDueDateRules, titleRules } from "@/store/services/rules";
 
 const dialog = ref(false),
   valid = ref(false);
@@ -49,8 +49,7 @@ function doCreate() {
               label="Title"
               v-model="task.title"
               variant="outlined"
-              :rules="taskTitleRules"
-              required
+              :rules="titleRules"
               autofocus
             ></v-text-field>
 

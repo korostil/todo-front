@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { deleteTask, updateTask } from "@/store/api/tasks";
 import { findProjectIndex, active_projects } from "@/store/api/projects";
 import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
-import { taskDueDateRules, taskTitleRules } from "@/store/services/rules";
+import { taskDueDateRules, titleRules } from "@/store/services/rules";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -54,7 +54,7 @@ function doDelete(task_id) {
               label="Title"
               v-model="task.title"
               variant="outlined"
-              :rules="taskTitleRules"
+              :rules="titleRules"
               required
               autofocus
             ></v-text-field>
