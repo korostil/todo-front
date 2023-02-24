@@ -5,7 +5,7 @@ import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
 import ButtonArchiveProject from "@/components/ButtonArchiveProject.vue";
 import ButtonRestoreProject from "@/components/ButtonRestoreProject.vue";
-import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
+import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
 
 const props = defineProps({
   archived: { type: Boolean, required: false, default: null },
@@ -51,10 +51,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <snackbar-loading-failed
+  <snackbar-with-timeout
     text="Failed to load project list. Please reload the page."
     v-if="loading_error"
-  ></snackbar-loading-failed>
+  ></snackbar-with-timeout>
   <v-list lines="two" v-else>
     <v-list-subheader>PROJECTS</v-list-subheader>
     <v-list-item

@@ -3,7 +3,7 @@ import TaskItem from "@/components/TaskItem.vue";
 import { ref, watch, watchEffect } from "vue";
 import { readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
-import SnackbarLoadingFailed from "@/components/SnackbarLoadingFailed.vue";
+import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
 
 const props = defineProps({
   completed: { type: Boolean, required: false, default: null },
@@ -24,7 +24,8 @@ const completed = ref(props.completed),
   space = ref(props.space),
   today = ref(props.today),
   tasks = ref(null),
-  loading_error = ref(null);
+  loading_error = ref(null),
+  taskCompleted = ref(false);
 
 function fetchTasks() {
   let filter;
@@ -69,6 +70,7 @@ watchEffect(() => {
 });
 
 function doComplete(task_id) {
+  taskCompleted.value = true;
   function removeValue(value, index, arr) {
     if (value.id === task_id) {
       arr.splice(index, 1);
@@ -88,10 +90,14 @@ function doComplete(task_id) {
 </script>
 
 <template>
-  <snackbar-loading-failed
+  <snackbar-with-timeout
+    text="Task is completed"
+    v-if="taskCompleted"
+  ></snackbar-with-timeout>
+  <snackbar-with-timeout
     text="Failed to load task list. Please reload the page."
     v-if="loading_error"
-  ></snackbar-loading-failed>
+  ></snackbar-with-timeout>
   <v-list lines="two" v-else>
     <v-list-item
       v-for="task in tasks"
