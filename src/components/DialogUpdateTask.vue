@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import { deleteTask, updateTask } from "@/store/api/tasks";
-import { findProjectIndex, active_projects } from "@/store/api/projects";
+import { activeProjects } from "@/store/api/projects";
 import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
 import { taskDueDateRules, titleRules } from "@/store/services/rules";
 import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
+import { findEntityIndexById } from "@/store/services/utils/entities";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -15,8 +16,8 @@ const dialog = ref(false),
 const task = ref(Object.assign({}, props.task));
 
 function doUpdate() {
-  const project =
-    active_projects.value[findProjectIndex(task.value.project_id)];
+  const projectIdx = findEntityIndexById(activeProjects, task.value.project_id),
+    project = activeProjects.value[projectIdx];
   if (project) task.value.space = project.space;
 
   return updateTask(task.value.id, task.value)
@@ -92,7 +93,7 @@ function doDelete(task_id) {
             <v-select
               label="Project"
               v-model="task.project_id"
-              :items="active_projects"
+              :items="activeProjects"
               item-title="title"
               item-value="id"
               variant="outlined"

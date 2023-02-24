@@ -3,12 +3,14 @@ import { getFormattedDueDateTime } from "@/store/services/utils/dates";
 import { completeTask } from "@/store/api/tasks";
 import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
 import { ref } from "vue";
-import { findProjectIndex, projects } from "@/store/api/projects";
+import { projects } from "@/store/api/projects";
+import { findEntityIndexById } from "@/store/services/utils/entities";
 
 const props = defineProps({ task: Object });
 const emit = defineEmits(["taskCompleted"]);
 const refTaskIsCompleted = ref(props.task.is_completed);
-const project = projects.value[findProjectIndex(props.task.project_id)];
+const projectIdx = findEntityIndexById(projects, props.task.project_id),
+  project = projects.value[projectIdx];
 
 function doComplete() {
   completeTask(props.task.id);

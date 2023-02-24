@@ -1,10 +1,12 @@
 import { todoAPIHeaders, todoAPIUrl, useFetch } from "@/store/api/base";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { findEntityIndexById } from "@/store/services/utils/entities";
 
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/projects/");
 
 export const projects = ref([]);
-export const active_projects = computed(() =>
+export const isProjectsLoadingError = ref(false);
+export const activeProjects = computed(() =>
   projects.value.filter((project) => !project.is_archived)
 );
 
@@ -34,7 +36,14 @@ export function readProjectList({ force = false }) {
   if (projects.value.length !== 0 && !force)
     return { data: projects, error: ref(null) };
 
-  return useFetch(url);
+  const { data, error } = useFetch(url);
+
+  watch(data, () => {
+    projects.value = data.value;
+  });
+  watch(error, () => {
+    isProjectsLoadingError.value = error.value;
+  });
 }
 
 export function readProject(id) {
@@ -66,7 +75,7 @@ export function updateProject(id, body) {
       return response.json();
     })
     .then((json) => {
-      projects.value.splice(findProjectIndex(id), 1, json.data);
+      projects.value.splice(findEntityIndexById(projects, id), 1, json.data);
       return json;
     });
 }
@@ -85,7 +94,7 @@ export function archiveProject(id) {
       return response.json();
     })
     .then((json) => {
-      projects.value.splice(findProjectIndex(id), 1, json.data);
+      projects.value.splice(findEntityIndexById(projects, id), 1, json.data);
       return json;
     });
 }
@@ -104,7 +113,7 @@ export function restoreProject(id) {
       return response.json();
     })
     .then((json) => {
-      projects.value.splice(findProjectIndex(id), 1, json.data);
+      projects.value.splice(findEntityIndexById(projects, id), 1, json.data);
       return json;
     });
 }
@@ -122,11 +131,7 @@ export function deleteProject(id) {
       }
     })
     .then((json) => {
-      projects.value.splice(findProjectIndex(id), 1);
+      projects.value.splice(findEntityIndexById(projects, id), 1);
       return json;
     });
-}
-
-export function findProjectIndex(projectId) {
-  return projects.value.findIndex((project) => project.id === projectId);
 }

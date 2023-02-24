@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { readProjectList, projects } from "@/store/api/projects";
 import ButtonUpdateProject from "@/components/ButtonUpdateProject.vue";
 import ButtonRemoveProject from "@/components/ButtonRemoveProject.vue";
@@ -16,17 +16,6 @@ const emit = defineEmits(["projectSelected"]);
 const archived = ref(props.archived),
   search = ref(props.search),
   loading_error = ref(null);
-
-function fetchProjects() {
-  const { data, error } = readProjectList({});
-
-  watch(data, () => {
-    projects.value = data.value;
-  });
-  watch(error, () => {
-    loading_error.value = error.value;
-  });
-}
 
 const filteredProjects = computed(() => {
   if (!projects.value) return [];
@@ -46,7 +35,7 @@ const filteredProjects = computed(() => {
 watchEffect(() => {
   archived.value = props.archived;
   search.value = props.search;
-  fetchProjects();
+  readProjectList({});
 });
 </script>
 

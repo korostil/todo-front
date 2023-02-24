@@ -2,9 +2,10 @@
 import { ref } from "vue";
 import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
-import { active_projects, findProjectIndex } from "@/store/api/projects";
+import { activeProjects } from "@/store/api/projects";
 import { taskDueDateRules, titleRules } from "@/store/services/rules";
 import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
+import { findEntityIndexById } from "@/store/services/utils/entities";
 
 const dialog = ref(false),
   valid = ref(false);
@@ -14,8 +15,8 @@ const task = ref({
 });
 
 function doCreate() {
-  const project =
-    active_projects.value[findProjectIndex(task.value.project_id)];
+  const projectIdx = findEntityIndexById(activeProjects, task.value.project_id),
+    project = activeProjects.value[projectIdx];
   if (project) task.value.space = project.space;
 
   return createTask(task.value)
@@ -86,7 +87,7 @@ function doCreate() {
             <v-select
               label="Project"
               v-model="task.project_id"
-              :items="active_projects"
+              :items="activeProjects"
               item-title="title"
               item-value="id"
               variant="outlined"

@@ -1,31 +1,15 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import ButtonNewTask from "@/components/ButtonNewTask.vue";
 import TaskList from "@/components/TaskList.vue";
 import TheHeader from "@/components/TheHeader.vue";
-import { readProjectList } from "@/store/api/projects";
+import { activeProjects, readProjectList } from "@/store/api/projects";
 
 const refCompleted = ref(null);
 const refProjectId = ref(null);
 
-const projects = ref(null),
-  loading_error = ref(null);
-
-function fetchProjects() {
-  const { data, error } = readProjectList({
-    archived: false,
-  });
-
-  watch(data, () => {
-    projects.value = data.value;
-  });
-  watch(error, () => {
-    loading_error.value = error.value;
-  });
-}
-
 onMounted(() => {
-  fetchProjects();
+  readProjectList({});
 });
 </script>
 
@@ -49,7 +33,7 @@ onMounted(() => {
                     <v-select
                       label="Project"
                       v-model="refProjectId"
-                      :items="projects"
+                      :items="activeProjects"
                       item-title="title"
                       item-value="id"
                       variant="outlined"
