@@ -16,7 +16,7 @@ import { ref } from "vue";
 const projectId = ref(null);
 
 function showProjectTasks(project_id) {
-  projectId.value = project_id;
+  projectId.value = projectId.value === project_id ? null : project_id;
 }
 </script>
 
