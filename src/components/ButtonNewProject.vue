@@ -2,16 +2,17 @@
 import { ref } from "vue";
 import { createProject } from "@/store/api/projects";
 import { descriptionRules, titleRules } from "@/store/services/rules";
+import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
 
 const dialog = ref(false),
   valid = ref(false);
-const project = ref({ space: 2 });
+const project = ref({ space: PERSONAL_SPACE });
 
 function doCreate() {
   return createProject(project.value)
     .then(() => {
       dialog.value = false;
-      project.value = { space: 2 };
+      project.value = { space: PERSONAL_SPACE };
     })
     .catch(() => {
       console.log("error");
@@ -65,8 +66,8 @@ function doCreate() {
               active-color="primary"
               mandatory
             >
-              <v-btn icon="mdi-account" :value="2"></v-btn>
-              <v-btn icon="mdi-domain" :value="1"></v-btn>
+              <v-btn icon="mdi-account" :value="PERSONAL_SPACE"></v-btn>
+              <v-btn icon="mdi-domain" :value="WORK_SPACE"></v-btn>
             </v-btn-toggle>
           </v-container>
 

@@ -4,6 +4,7 @@ import { deleteTask, updateTask } from "@/store/api/tasks";
 import { findProjectIndex, active_projects } from "@/store/api/projects";
 import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
 import { taskDueDateRules, titleRules } from "@/store/services/rules";
+import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -105,8 +106,8 @@ function doDelete(task_id) {
               v-if="!task.project_id"
             >
               <v-label> Space </v-label>
-              <v-btn icon="mdi-account" :value="2"></v-btn>
-              <v-btn icon="mdi-domain" :value="1"></v-btn>
+              <v-btn icon="mdi-account" :value="PERSONAL_SPACE"></v-btn>
+              <v-btn icon="mdi-domain" :value="WORK_SPACE"></v-btn>
             </v-btn-toggle>
           </v-container>
 

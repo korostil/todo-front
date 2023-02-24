@@ -4,12 +4,13 @@ import { createTask } from "@/store/api/tasks";
 import { useRouter } from "vue-router";
 import { active_projects, findProjectIndex } from "@/store/api/projects";
 import { taskDueDateRules, titleRules } from "@/store/services/rules";
+import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
 
 const dialog = ref(false),
   valid = ref(false);
 const router = useRouter();
 const task = ref({
-  space: 2,
+  space: PERSONAL_SPACE,
 });
 
 function doCreate() {
@@ -99,8 +100,8 @@ function doCreate() {
               v-if="!task.project_id"
             >
               <v-label> Space </v-label>
-              <v-btn icon="mdi-account" :value="2"></v-btn>
-              <v-btn icon="mdi-domain" :value="1"></v-btn>
+              <v-btn icon="mdi-account" :value="PERSONAL_SPACE"></v-btn>
+              <v-btn icon="mdi-domain" :value="WORK_SPACE"></v-btn>
             </v-btn-toggle>
           </v-container>
 
