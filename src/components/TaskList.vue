@@ -30,7 +30,6 @@ const completed = ref(props.completed),
 
 function fetchTasks() {
   let filter;
-  console.log(project_id.value, project_id.value === INBOX_PROJECT_ID);
   if (project_id.value === INBOX_PROJECT_ID) {
     filter = {
       completed: completed.value,
@@ -111,7 +110,6 @@ function doComplete(task_id) {
   ></snackbar-with-timeout>
   <v-list v-else>
     <v-list-item
-      lines="two"
       v-for="task in tasks"
       :key="task.id"
       active-color="primary"
