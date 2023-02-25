@@ -31,7 +31,10 @@ const refArchived = ref(null);
                   </v-row>
                 </v-container>
                 <!-- TODO show all tasks view with predefined filter by project -->
-                <project-list :archived="refArchived"></project-list>
+                <project-list
+                  :archived="refArchived"
+                  :showDescription="true"
+                ></project-list>
               </v-container>
             </v-sheet>
           </v-col>

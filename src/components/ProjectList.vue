@@ -11,6 +11,7 @@ import { INBOX_PROJECT_ID } from "@/store/services/constants";
 const props = defineProps({
   archived: { type: Boolean, required: false, default: null },
   search: { type: String, required: false, default: null },
+  showDescription: { type: Boolean, required: false, default: false },
 });
 const emit = defineEmits(["projectSelected"]);
 
@@ -47,7 +48,6 @@ watchEffect(() => {
   ></snackbar-with-timeout>
   <v-list v-else>
     <v-list-item
-      lines="one"
       title="Inbox"
       :value="INBOX_PROJECT_ID"
       active-color="secondary"
@@ -57,11 +57,10 @@ watchEffect(() => {
     ></v-list-item>
     <v-list-subheader>PROJECTS</v-list-subheader>
     <v-list-item
-      lines="two"
       v-for="project in filteredProjects"
       :key="project.id"
       :title="project.title"
-      :subtitle="project.description"
+      :subtitle="showDescription ? project.description : ''"
       :value="project.id"
       @click="emit('projectSelected', project.id)"
       active-color="secondary"
