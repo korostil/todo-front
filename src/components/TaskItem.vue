@@ -35,7 +35,7 @@ const spaceIcon = computed(() => {
         size="small"
         variant="outlined"
         :icon="refTaskIsCompleted ? 'mdi-check' : ''"
-        color="grey"
+        :color="props.task.decisive ? 'red' : 'grey'"
         @click="doComplete"
       ></v-btn>
     </v-col>
