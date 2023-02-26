@@ -27,6 +27,7 @@ const due_datetime = computed(() => {
   <v-row>
     <v-col cols="12" sm="1">
       <v-btn
+        class="ma-2"
         size="small"
         variant="outlined"
         :icon="refTaskIsCompleted ? 'mdi-check' : ''"
@@ -36,7 +37,7 @@ const due_datetime = computed(() => {
     </v-col>
     <v-col cols="12" sm="11">
       <dialog-update-task :task="task"></dialog-update-task>
-      <div>
+      <div class="mt-1">
         <span class="text-h5">{{ props.task.title }}</span>
       </div>
       <div>
