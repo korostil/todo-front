@@ -113,7 +113,7 @@ export function completeTask(id) {
   });
 }
 
-export function reopenTask(id) {
+export function restoreTask(id) {
   return fetch(entity_url + id + "/reopen/", {
     method: "post",
     headers: todoAPIHeaders,

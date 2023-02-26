@@ -6,6 +6,7 @@ import ButtonRemoveTask from "@/components/ButtonRemoveTask.vue";
 import { taskDueDateRules, titleRules } from "@/store/services/rules";
 import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
 import { findEntityIndexById } from "@/store/services/utils/entities";
+import ButtonRestoreTask from "@/components/ButtonRestoreTask.vue";
 
 const emit = defineEmits(["taskUpdated"]);
 const props = defineProps({
@@ -118,6 +119,7 @@ function doDelete(task_id) {
               :task="task"
               @task-removed="doDelete"
             ></button-remove-task>
+            <button-restore-task :task="task"></button-restore-task>
             <v-btn color="primary" type="submit"> Save </v-btn>
           </v-card-actions>
         </v-form>

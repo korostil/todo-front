@@ -1,12 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import {
-  completeTask,
-  deleteTask,
-  readTask,
-  reopenTask,
-} from "@/store/api/tasks";
+import { completeTask, deleteTask, readTask } from "@/store/api/tasks";
 import { readProject } from "@/store/api/projects";
 
 const route = useRoute();
@@ -58,15 +53,6 @@ function doComplete() {
     });
 }
 
-function doReopen() {
-  reopenTask(task_id)
-    .then(() => {
-      router.push({ name: "main" });
-    })
-    .catch(() => {
-      console.log("error");
-    });
-}
 function fetchProject(id) {
   return readProject(id)
     .then((json) => {
@@ -113,9 +99,6 @@ onMounted(() => {
         <strong>Project: {{ project.title }}</strong>
       </div>
 
-      <div v-if="task.is_completed">
-        <button class="btn green" @click="doReopen">Reopen</button>
-      </div>
       <div v-else>
         <button class="btn green" @click="doComplete">Complete</button>
       </div>
