@@ -5,6 +5,7 @@ import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
 import { computed, ref } from "vue";
 import { projects } from "@/store/api/projects";
 import { findEntityIndexById } from "@/store/services/utils/entities";
+import { PERSONAL_SPACE } from "@/store/services/constants";
 
 const props = defineProps({ task: Object });
 const emit = defineEmits(["taskCompleted"]);
@@ -20,6 +21,9 @@ function doComplete() {
 
 const due_datetime = computed(() => {
   return getFormattedDueDateTime(props.task.due_date, props.task.due_time);
+});
+const spaceIcon = computed(() => {
+  return props.task.space === PERSONAL_SPACE ? "mdi-account" : "mdi-domain";
 });
 </script>
 
@@ -71,6 +75,7 @@ const due_datetime = computed(() => {
             variant="text"
           >
             {{ project ? project.title : "" }}
+            <v-icon end :icon="spaceIcon"></v-icon>
           </v-chip>
         </v-col>
       </v-row>
