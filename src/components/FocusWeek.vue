@@ -1,24 +1,47 @@
 <script setup>
-const focus = [
-  { title: "Decisive task 1", description: "lorem", is_completed: false },
-  { title: "Decisive task 2", description: "ipsum", is_completed: true },
-  { title: "Decisive task 3", description: "dios mio", is_completed: false },
-];
+import { onMounted, ref, watch } from "vue";
+import { readTaskList } from "@/store/api/tasks";
+import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
+import { getMonday, getSunday, toUnixDate } from "@/store/services/utils/dates";
+import DialogUpdateTask from "@/components/DialogUpdateTask.vue";
+
+const tasks = ref([]),
+  loading_error = ref(null);
+
+onMounted(() => {
+  const { data, error } = readTaskList({
+    decisive: true,
+    due_from: toUnixDate(getMonday(new Date())),
+    due_to: toUnixDate(getSunday(new Date())),
+  });
+
+  watch(data, () => {
+    tasks.value = data.value;
+  });
+  watch(error, () => {
+    loading_error.value = error.value;
+  });
+});
 </script>
 
 <template>
+  <snackbar-with-timeout
+    text="Failed to load week focus list. Please reload the page."
+    v-if="loading_error"
+  ></snackbar-with-timeout>
   <v-list>
     <v-list-subheader>WEEK FOCUS</v-list-subheader>
     <v-list-item
-      v-for="task in focus"
+      v-for="task in tasks"
       :key="task.id"
       :title="task.title"
       :subtitle="task.description"
-      :prepend-icon="task.is_completed ? 'mdi-check' : 'mdi-circle-outline'"
+      :prepend-icon="task.is_completed ? 'mdi-check' : 'mdi-progress-helper'"
       active-color="primary"
       rounded="lg"
       @click="true"
     >
+      <dialog-update-task :task="task"></dialog-update-task>
     </v-list-item>
   </v-list>
 </template>
