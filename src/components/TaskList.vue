@@ -1,6 +1,6 @@
 <script setup>
 import TaskItem from "@/components/TaskItem.vue";
-import { ref, watch, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import { readTaskList } from "@/store/api/tasks";
 import { toUnixDate } from "@/store/services/utils/dates";
 import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
@@ -59,10 +59,10 @@ function fetchTasks() {
 
   const { data, error } = readTaskList(filter);
 
-  watch(data, () => {
+  watchEffect(() => {
     tasks.value = data.value;
   });
-  watch(error, () => {
+  watchEffect(() => {
     loading_error.value = error.value;
   });
 }

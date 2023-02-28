@@ -1,5 +1,5 @@
 import { todoAPIHeaders, todoAPIUrl, useFetch } from "@/store/api/base";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { findEntityIndexById } from "@/store/services/utils/entities";
 
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/projects/");
@@ -33,15 +33,15 @@ export function createProject(body) {
 export function readProjectList({ force = false }) {
   let url = new URL(todoAPIUrl + "/api/private/v1/projects/");
 
-  if (projects.value.length !== 0 && !force)
+  if (projects.value && projects.value.length !== 0 && !force)
     return { data: projects, error: ref(null) };
 
   const { data, error } = useFetch(url);
 
-  watch(data, () => {
+  watchEffect(() => {
     projects.value = data.value;
   });
-  watch(error, () => {
+  watchEffect(() => {
     isProjectsLoadingError.value = error.value;
   });
 }

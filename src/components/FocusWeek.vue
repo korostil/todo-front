@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { readTaskList } from "@/store/api/tasks";
 import SnackbarWithTimeout from "@/components/SnackbarWithTimeout.vue";
 import { getMonday, getSunday, toUnixDate } from "@/store/services/utils/dates";
@@ -15,10 +15,10 @@ onMounted(() => {
     due_to: toUnixDate(getSunday(new Date())),
   });
 
-  watch(data, () => {
+  watchEffect(() => {
     tasks.value = data.value;
   });
-  watch(error, () => {
+  watchEffect(() => {
     loading_error.value = error.value;
   });
 });
