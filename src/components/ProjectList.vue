@@ -11,12 +11,14 @@ import { INBOX_PROJECT_ID } from "@/store/services/constants";
 const props = defineProps({
   archived: { type: Boolean, required: false, default: null },
   search: { type: String, required: false, default: null },
+  space: { type: Number, required: false, default: null },
   showDescription: { type: Boolean, required: false, default: false },
 });
 const emit = defineEmits(["projectSelected"]);
 
 const archived = ref(props.archived),
   search = ref(props.search),
+  space = ref(props.space),
   loading_error = ref(null);
 
 const filteredProjects = computed(() => {
@@ -28,15 +30,17 @@ const filteredProjects = computed(() => {
       is_searched =
         search.value === null ||
         project.title.includes(search.value) ||
-        project.description.includes(search.value);
+        project.description.includes(search.value),
+      is_in_space = space.value === null || project.space === space.value;
 
-    return is_archived && is_searched;
+    return is_archived && is_searched && is_in_space;
   });
 });
 
 watchEffect(() => {
   archived.value = props.archived;
   search.value = props.search;
+  space.value = props.space;
   readProjectList({});
 });
 </script>

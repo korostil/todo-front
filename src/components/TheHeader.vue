@@ -1,5 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
+import { PERSONAL_SPACE, WORK_SPACE } from "@/store/services/constants";
+import { space } from "@/store/services/globals";
 const router = useRouter();
 </script>
 
@@ -21,9 +23,9 @@ const router = useRouter();
       variant="outlined"
     ></v-text-field>
 
-    <v-btn-toggle v-model="space_ref" active-color="primary" multiple>
-      <v-btn icon="mdi-account"></v-btn>
-      <v-btn icon="mdi-domain"></v-btn>
+    <v-btn-toggle v-model="space" active-color="primary">
+      <v-btn icon="mdi-account" :value="PERSONAL_SPACE"></v-btn>
+      <v-btn icon="mdi-domain" :value="WORK_SPACE"></v-btn>
     </v-btn-toggle>
     <v-spacer></v-spacer>
   </v-app-bar>

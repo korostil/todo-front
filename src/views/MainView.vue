@@ -12,6 +12,7 @@ import FocusYear from "@/components/FocusYear.vue";
 import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
 import ButtonAllGoals from "@/components/ButtonAllGoals.vue";
 import { ref } from "vue";
+import { space } from "@/store/services/globals";
 
 const projectId = ref(null);
 
@@ -28,12 +29,13 @@ function showProjectTasks(project_id) {
       <v-container>
         <v-row>
           <v-col cols="12" sm="3">
-            <v-sheet rounded="lg" min-height="268">
+            <v-sheet rounded="lg">
               <v-container>
                 <button-new-project></button-new-project>
                 <button-all-projects></button-all-projects>
                 <project-list
                   :archived="false"
+                  :space="space"
                   @project-selected="showProjectTasks"
                 ></project-list>
               </v-container>

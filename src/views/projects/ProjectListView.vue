@@ -3,6 +3,7 @@ import { ref } from "vue";
 import TheHeader from "@/components/TheHeader.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import ButtonNewProject from "@/components/ButtonNewProject.vue";
+import { space } from "@/store/services/globals";
 
 const refArchived = ref(null);
 </script>
@@ -16,7 +17,7 @@ const refArchived = ref(null);
         <v-row>
           <v-spacer></v-spacer>
           <v-col cols="12" sm="6">
-            <v-sheet rounded="lg" min-height="268">
+            <v-sheet rounded="lg">
               <v-container>
                 <v-container>
                   <v-row>
@@ -33,6 +34,7 @@ const refArchived = ref(null);
                 <!-- TODO show all tasks view with predefined filter by project -->
                 <project-list
                   :archived="refArchived"
+                  :space="space"
                   :showDescription="true"
                 ></project-list>
               </v-container>
