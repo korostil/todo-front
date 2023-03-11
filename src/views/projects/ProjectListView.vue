@@ -34,7 +34,7 @@ const refArchived = ref(null);
                 <project-list
                   :archived="refArchived"
                   :space="space"
-                  :showDescription="true"
+                  :show-description="true"
                 ></project-list>
               </v-container>
             </v-sheet>

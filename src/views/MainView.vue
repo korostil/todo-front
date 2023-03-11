@@ -48,7 +48,7 @@ function showProjectTasks(project_id) {
                 <button-all-tasks></button-all-tasks>
                 <task-list
                   :today="projectId === null"
-                  :projectId="projectId"
+                  :project-id="projectId"
                 ></task-list>
               </v-container>
             </v-sheet>
