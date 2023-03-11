@@ -1,5 +1,4 @@
 <script setup>
-import TheHeader from "@/components/TheHeader.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import TaskList from "@/components/TaskList.vue";
 import ButtonNewProject from "@/components/ButtonNewProject.vue";

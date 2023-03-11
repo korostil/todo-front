@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import TheHeader from "@/components/TheHeader.vue";
 import ProjectList from "@/components/ProjectList.vue";
 import ButtonNewProject from "@/components/ButtonNewProject.vue";
 import { space } from "@/store/services/globals";

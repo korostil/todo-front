@@ -2,7 +2,6 @@
 import { onMounted, ref } from "vue";
 import ButtonNewTask from "@/components/ButtonNewTask.vue";
 import TaskList from "@/components/TaskList.vue";
-import TheHeader from "@/components/TheHeader.vue";
 import { activeProjects, readProjectList } from "@/store/api/projects";
 
 const refCompleted = ref(null);

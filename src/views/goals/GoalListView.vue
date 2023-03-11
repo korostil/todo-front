@@ -1,5 +1,4 @@
 <script setup>
-import TheHeader from "@/components/TheHeader.vue";
 import ButtonNewGoal from "@/components/ButtonNewGoal.vue";
 import { monthShortNames } from "@/store/services/utils/dates";
 
