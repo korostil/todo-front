@@ -43,6 +43,7 @@ function fetchTasks() {
   } else if (today.value === true) {
     filter = {
       completed: false,
+      space: space.value,
       due_to: toUnixDate(new Date()),
     };
   } else {
