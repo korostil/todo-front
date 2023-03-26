@@ -1,4 +1,4 @@
-import { todoAPIHeaders, todoAPIUrl } from "@/store/api/base";
+import { todoAPIHeaders, todoAPIUrl, useFetch } from "@/store/api/base";
 
 const entity_url = new URL(todoAPIUrl + "/api/private/v1/goals/");
 
@@ -23,7 +23,7 @@ export function readGoalList({
   month = null,
   year = null,
 }) {
-  let url = entity_url;
+  let url = new URL(todoAPIUrl + "/api/private/v1/goals/");
 
   if (archived !== null && archived !== "null") {
     url.searchParams.set("archived", archived);
@@ -38,17 +38,7 @@ export function readGoalList({
     url.searchParams.set("year", year);
   }
 
-  return fetch(url, {
-    method: "get",
-    headers: todoAPIHeaders,
-  }).then((response) => {
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      error.json = response.json();
-      throw error;
-    }
-    return response.json();
-  });
+  return useFetch(url);
 }
 
 export function readGoal(id) {
